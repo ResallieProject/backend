@@ -12,21 +12,22 @@ public class Program
         // Add services to the container.
         var serverVersion = new MySqlServerVersion(new Version(10, 9));
         var config = builder.Configuration;
+        var services = builder.Services;
 
-        builder.Services.AddDbContextPool<AppDbContext>(dbContextOptions => dbContextOptions
+        services.AddDbContextPool<AppDbContext>(dbContextOptions => dbContextOptions
             .UseMySql(config.GetConnectionString("DefaultConnection"), serverVersion)
             // The following three options help with debugging, but should
             // be changed or removed for production.
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging());
 
-        builder.Services.AddControllers();
+        services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
 
-        builder.Services.AddScoped<AdvertisementRepository>();
-        builder.Services.AddScoped<AdvertisementService>();
+        services.AddScoped<AdvertisementRepository>();
+        services.AddScoped<AdvertisementService>();
 
         var app = builder.Build();
 
