@@ -25,7 +25,7 @@ public class AdvertisementController : ControllerBase
     public async Task<Advertisement> Create([FromBody] Advertisement advertisement)
     {
         advertisement = await _service.Create(advertisement);
-        
+
         return advertisement;
     }
 }

@@ -11,8 +11,8 @@ using Resallie.Data;
 namespace Resallie.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221115093646_CreateAdvertisementsTable")]
-    partial class CreateAdvertisementsTable
+    [Migration("20221116121127_CreateCategoriesTable")]
+    partial class CreateCategoriesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,10 +27,6 @@ namespace Resallie.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("CreatedAt")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -44,14 +40,14 @@ namespace Resallie.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -62,12 +58,41 @@ namespace Resallie.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
-
                     b.HasKey("AdvertisementId");
 
                     b.ToTable("Advertisements");
+                });
+
+            modelBuilder.Entity("Resallie.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
                 });
 #pragma warning restore 612, 618
         }

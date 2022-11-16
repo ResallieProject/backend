@@ -14,8 +14,6 @@ public class AdvertisementService
 
     public async Task<Advertisement> Create(Advertisement advertisement)
     {
-        
-        
         await _repository.Create(advertisement);
 
         return advertisement;
