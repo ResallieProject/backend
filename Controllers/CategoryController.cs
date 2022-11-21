@@ -17,9 +17,9 @@ namespace Resallie.Controllers
         }
 
         [HttpGet]
-        public void Index()
+        public List<Category> Index()
         {
-            _service.GetAllCategories();
+            return _service.GetAllCategories();
         }
     }
 }
