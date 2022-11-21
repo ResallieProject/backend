@@ -1,19 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Resallie.Models;
 
 namespace Resallie.Models
 {
     public class Category : Model
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CategoryId
-        {
-            get => Id;
-            set => Id = value;
-        }
-
-        [Required] public string CategoryName { get; set; }
-        [Required] public string CategoryDescription { get; set; }
+        [StringLength(128)]
+        [Required] public string Name { get; set; }
+        [StringLength(256)]
+        [Required] public string Description { get; set; }
     }
 }

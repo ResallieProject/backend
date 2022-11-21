@@ -11,4 +11,13 @@ public class AppDbContext : DbContext
 
     public DbSet<Advertisement> Advertisements { get; set; }
     public DbSet<Category> Categories { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Advertisement>().Property(a => a.CreatedAt)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+        
+        builder.Entity<Category>().Property(a => a.CreatedAt)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+    }
 }

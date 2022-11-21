@@ -1,4 +1,5 @@
-﻿using Resallie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Resallie.Data;
 using Resallie.Models;
 
 namespace Resallie.Respositories.Advertisements;
@@ -17,6 +18,8 @@ public class AdvertisementRepository
         await _ctx.Advertisements.AddAsync(advertisement);
         await _ctx.SaveChangesAsync();
 
+        await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
+        
         return advertisement;
     }
 }

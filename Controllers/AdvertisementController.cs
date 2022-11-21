@@ -9,12 +9,12 @@ namespace Resallie.Controllers;
 public class AdvertisementController : ControllerBase
 {
     private AdvertisementService _service;
-    
+
     public AdvertisementController(AdvertisementService service)
     {
         _service = service;
     }
-    
+
     [HttpGet]
     public string Index()
     {
@@ -22,10 +22,12 @@ public class AdvertisementController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Advertisement> Create([FromBody] Advertisement advertisement)
+    public async Task<IActionResult> Create([FromBody] Advertisement advertisement)
     {
+        if (advertisement.Category != null) return BadRequest();
+
         advertisement = await _service.Create(advertisement);
 
-        return advertisement;
+        return Ok(advertisement);
     }
 }
