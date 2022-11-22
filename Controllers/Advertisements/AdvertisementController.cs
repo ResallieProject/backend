@@ -16,9 +16,9 @@ public class AdvertisementController : ControllerBase
     }
 
     [HttpGet]
-    public string Index()
+    public Task<List<Advertisement>> Index()
     {
-        return "Hi";
+        return _service.GetAll();
     }
 
     [HttpPost]
@@ -29,5 +29,25 @@ public class AdvertisementController : ControllerBase
         advertisement = await _service.Create(advertisement);
 
         return Ok(advertisement);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        Advertisement? advertisement = await _service.Get(id);
+        
+        if (advertisement == null) return NotFound();
+
+        return Ok(advertisement);
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        bool success = await _service.Delete(id);
+
+        if (!success) return NotFound();
+
+        return Ok();
     }
 }
