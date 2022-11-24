@@ -19,5 +19,6 @@ namespace Resallie.Models
         [Required] public int CategoryId { get; set; }
         
         public virtual Category? Category { get; set; }
+        public virtual ICollection<AdvertisementFeature>? AdvertisementFeatures { get; set; }
     }
 }
