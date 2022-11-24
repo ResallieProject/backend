@@ -1,4 +1,5 @@
-﻿using Resallie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Resallie.Data;
 using Resallie.Models;
 
 namespace Resallie.Respositories.Categories
@@ -12,9 +13,9 @@ namespace Resallie.Respositories.Categories
             _ctx = ctx;
         }
 
-        public List<Category> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
         {
-            return _ctx.Categories.ToList();
+            return await _ctx.Categories.ToListAsync();
         }
     }
 }

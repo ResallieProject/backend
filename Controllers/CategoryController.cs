@@ -5,7 +5,7 @@ using Resallie.Services.Categories;
 
 namespace Resallie.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -17,9 +17,11 @@ namespace Resallie.Controllers
         }
 
         [HttpGet]
-        public void Index()
+        public async Task<IActionResult> Index()
         {
-            _service.GetAllCategories();
+            return Ok(
+                await _service.GetAllCategories()
+            );
         }
     }
 }
