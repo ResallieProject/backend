@@ -139,7 +139,7 @@ namespace Resallie.Migrations
             modelBuilder.Entity("Resallie.Models.AdvertisementFeature", b =>
                 {
                     b.HasOne("Resallie.Models.Advertisement", "Advertisement")
-                        .WithMany("AdvertisementFeatures")
+                        .WithMany("Features")
                         .HasForeignKey("AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -149,7 +149,7 @@ namespace Resallie.Migrations
 
             modelBuilder.Entity("Resallie.Models.Advertisement", b =>
                 {
-                    b.Navigation("AdvertisementFeatures");
+                    b.Navigation("Features");
                 });
 #pragma warning restore 612, 618
         }

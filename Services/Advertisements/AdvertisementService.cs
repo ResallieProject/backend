@@ -18,12 +18,12 @@ public class AdvertisementService
 
         return advertisement;
     }
-    
+
     public async Task<bool> Delete(int id)
     {
         return await _repository.Delete(id);
     }
-    
+
     public async Task<Advertisement?> Get(int id)
     {
         return await _repository.Get(id);

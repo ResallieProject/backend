@@ -11,7 +11,7 @@ using Resallie.Data;
 namespace Resallie.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221124075926_CreateAdvertisementFeaturesTable")]
+    [Migration("20221124084937_CreateAdvertisementFeaturesTable")]
     partial class CreateAdvertisementFeaturesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -141,7 +141,7 @@ namespace Resallie.Migrations
             modelBuilder.Entity("Resallie.Models.AdvertisementFeature", b =>
                 {
                     b.HasOne("Resallie.Models.Advertisement", "Advertisement")
-                        .WithMany("AdvertisementFeatures")
+                        .WithMany("Features")
                         .HasForeignKey("AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -151,7 +151,7 @@ namespace Resallie.Migrations
 
             modelBuilder.Entity("Resallie.Models.Advertisement", b =>
                 {
-                    b.Navigation("AdvertisementFeatures");
+                    b.Navigation("Features");
                 });
 #pragma warning restore 612, 618
         }
