@@ -138,13 +138,11 @@ namespace Resallie.Migrations
 
             modelBuilder.Entity("Resallie.Models.AdvertisementFeature", b =>
                 {
-                    b.HasOne("Resallie.Models.Advertisement", "Advertisement")
+                    b.HasOne("Resallie.Models.Advertisement", null)
                         .WithMany("Features")
                         .HasForeignKey("AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Advertisement");
                 });
 
             modelBuilder.Entity("Resallie.Models.Advertisement", b =>

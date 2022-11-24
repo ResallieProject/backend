@@ -19,7 +19,5 @@ namespace Resallie.Models
         [JsonIgnore]
         [ForeignKey("Advertisement")]
         [Required] public int AdvertisementId { get; set; }
-        
-        public virtual Advertisement? Advertisement { get; set; }
     }
 }
