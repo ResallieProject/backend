@@ -34,6 +34,7 @@ public class Program
 
         services.AddScoped<AdvertisementService>();
         services.AddScoped<AdvertisementRepository>();
+        services.AddScoped<AdvertisementFeatureRepository>();
 
         var app = builder.Build();
 

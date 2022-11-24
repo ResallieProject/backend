@@ -6,10 +6,12 @@ namespace Resallie.Services.Advertisements;
 public class AdvertisementService
 {
     private AdvertisementRepository _repository;
+    private AdvertisementFeatureRepository _afRepository;
 
-    public AdvertisementService(AdvertisementRepository respository)
+    public AdvertisementService(AdvertisementRepository repository, AdvertisementFeatureRepository afRepository)
     {
-        _repository = respository;
+        _repository = repository;
+        _afRepository = afRepository;
     }
 
     public async Task<Advertisement> Create(Advertisement advertisement)
@@ -22,6 +24,7 @@ public class AdvertisementService
 
     public async Task<bool> Delete(int id)
     {
+        await _afRepository.DeleteMany(id);
         return await _repository.Delete(id);
     }
 
@@ -33,5 +36,23 @@ public class AdvertisementService
     public async Task<List<Advertisement>> GetAll()
     {
         return await _repository.GetAll();
+    }
+    
+    public async Task<Advertisement> Update(Advertisement advertisement, Advertisement oldAdvertisement)
+    {
+        oldAdvertisement.Title = advertisement.Title;
+        oldAdvertisement.Description = advertisement.Description;
+        oldAdvertisement.Defects = advertisement.Defects;
+        oldAdvertisement.IsExpired = advertisement.IsExpired;
+        oldAdvertisement.Price = advertisement.Price;
+        oldAdvertisement.CategoryId = advertisement.CategoryId;
+
+        await _afRepository.DeleteMany(oldAdvertisement.Id);
+
+        oldAdvertisement.Features = advertisement.Features;
+        
+        await _repository.Update(oldAdvertisement);
+        
+        return advertisement;
     }
 }

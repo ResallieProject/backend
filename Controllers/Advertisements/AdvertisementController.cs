@@ -50,4 +50,18 @@ public class AdvertisementController : ControllerBase
 
         return Ok();
     }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Advertisement advertisement)
+    {
+        if (advertisement.Category != null) return BadRequest();
+        
+        Advertisement? oldAdvertisement = await _service.Get(id);
+        if (oldAdvertisement == null) return NotFound();
+        
+        advertisement = await _service.Update(advertisement, oldAdvertisement);
+
+
+        return Ok(advertisement);
+    }
 }

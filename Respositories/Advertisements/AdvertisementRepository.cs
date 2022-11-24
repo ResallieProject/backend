@@ -18,9 +18,7 @@ public class AdvertisementRepository
         await _ctx.Advertisements.AddAsync(advertisement);
         await _ctx.SaveChangesAsync();
 
-        await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
-
-        return advertisement;
+        return await Get(advertisement.Id);
     }
 
     public async Task<bool> Delete(int id)
@@ -46,6 +44,7 @@ public class AdvertisementRepository
         }
 
         await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
+        await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
 
         return advertisement;
     }
@@ -56,8 +55,17 @@ public class AdvertisementRepository
         foreach (var advertisement in advertisements)
         {
             await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
+            await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
         }
 
         return advertisements;
+    }
+
+    public async Task<Advertisement> Update(Advertisement advertisement)
+    {
+        _ctx.Advertisements.Update(advertisement);
+        await _ctx.SaveChangesAsync();
+        
+        return await Get(advertisement.Id);
     }
 }
