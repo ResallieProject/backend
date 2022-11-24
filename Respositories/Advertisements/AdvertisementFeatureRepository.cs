@@ -13,7 +13,7 @@ public class AdvertisementFeatureRepository
         _ctx = ctx;
     }
 
-    public async Task<List<AdvertisementFeature>> CreateFeatures(List<AdvertisementFeature> features)
+    public async Task<List<AdvertisementFeature>> Insert(List<AdvertisementFeature> features)
     {
         foreach(AdvertisementFeature feature in features)
         {
