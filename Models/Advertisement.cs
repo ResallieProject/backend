@@ -25,22 +25,26 @@ namespace Resallie.Models
 
         public override void Seed(AppDbContext appDbContext, int quantity)
         {
-            var builder = new ModelBuilder();
-
             if (!appDbContext.Advertisements.Any() || quantity > 0)
             {
-                var a = new Faker<Advertisement>()
-                    .RuleFor(x => x.Title, x => x.Commerce.ProductName());
+                //var a = new Faker<Advertisement>()
+                //    .RuleFor(x => x.Title, x => x.Commerce.ProductName().
 
-                builder.Entity<Advertisement>().HasData(a.GenerateBetween(quantity, quantity));
-                appDbContext.SaveChanges();
+                //builder.Entity<Advertisement>().HasData(a.GenerateBetween(quantity, quantity));
+                //appDbContext.SaveChanges();
+                for(int i = 0; i < quantity; i++)
+                {
+                    Advertisement advertisement = FakedModel();
+
+                    appDbContext.Advertisements.Add(advertisement);
+                    appDbContext.SaveChanges();
+                }
             }
         }
         public override Advertisement FakedModel()
         {
             var id = 2;
             return new Faker<Advertisement>()
-                    .RuleFor(m => m.Id, f => id++)
                     .RuleFor(m => m.Title, f => f.Commerce.ProductName())
                     .RuleFor(m => m.Defects, f => f.Music.Genre())
                     .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
