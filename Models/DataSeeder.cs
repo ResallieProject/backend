@@ -12,10 +12,11 @@ namespace Resallie.Models
         {
             this.appDbContext = appDbContext;
 
-            var a = appDbContext;
-            ConvertionContext = new Dictionary<string, Model>();
-            ConvertionContext["categories"] = new Category();
-            ConvertionContext["advertisements"] = new Advertisement();
+            ConvertionContext = new Dictionary<string, Model>()
+            {
+                {"categories", new Category()},
+                {"advertisements", new Advertisement()}
+            };
         }
 
         public void Seed(string categoryname, int quatity)
