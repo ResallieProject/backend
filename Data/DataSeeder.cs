@@ -1,11 +1,11 @@
-﻿using Resallie.Data;
-using Bogus;
+﻿using Bogus;
+using Resallie.Models;
 
-namespace Resallie.Models
+namespace Resallie.Data
 {
     public class DataSeeder
     {
-        private Dictionary<string, Model> ConvertionContext;
+        private readonly Dictionary<string, Model> ConvertionContext;
         private readonly AppDbContext appDbContext;
 
         public DataSeeder(AppDbContext appDbContext)
@@ -19,14 +19,14 @@ namespace Resallie.Models
             };
         }
 
-        public void Seed(string categoryname, int quatity)
+        public void Seed(string categoryname, int quantity)
         {
-            if(!ConvertionContext.ContainsKey(categoryname))
+            if (!ConvertionContext.ContainsKey(categoryname))
             {
                 return;
             }
-            
-           ConvertionContext[categoryname].Seed(appDbContext, quatity);
+
+            ConvertionContext[categoryname].Seed(appDbContext, quantity);
         }
     }
 }

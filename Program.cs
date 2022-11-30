@@ -4,7 +4,6 @@ using Resallie.Services.Advertisements;
 using Resallie.Services.Categories;
 using Resallie.Respositories.Advertisements;
 using Resallie.Respositories.Categories;
-using Resallie.Models;
 
 public class Program
 {

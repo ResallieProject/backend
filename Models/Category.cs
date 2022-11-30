@@ -23,12 +23,15 @@ namespace Resallie.Models
         {
             if (!appDbContext.Categories.Any() || quantity > 0)
             {
-                var id = 1;
-                var a = new Faker<Category>()
-                    .RuleFor(m => m.Id, f => id++)
+
+                for (int i = 0; i < quantity; i++)
+                {
+                     appDbContext.Categories.Add(new Faker<Category>()
                     .RuleFor(m => m.Name, f => f.Commerce.Product())
                     .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
-                    .RuleFor(m => m.CreatedAt, f => DateTime.Now);
+                    .RuleFor(m => m.CreatedAt, f => DateTime.Now));
+                }
+                appDbContext.SaveChanges();
             }
         }
     }
