@@ -13,5 +13,15 @@ namespace Resallie.Models
 
         [Timestamp, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdatedAt { get; set; }
+
+        public virtual void Seed(Data.AppDbContext appDbContext, int quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Model FakedModel()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
