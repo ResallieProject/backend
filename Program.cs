@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
-using Resallie.Respositories.Advertisements;
 using Resallie.Services.Advertisements;
+using Resallie.Services.Categories;
+using Resallie.Respositories.Advertisements;
+using Resallie.Respositories.Categories;
+
 
 public class Program
 {
@@ -26,8 +29,12 @@ public class Program
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddScoped<AdvertisementRepository>();
+        services.AddScoped<CategoryRepository>();
+        services.AddScoped<CategoryService>();
+
         services.AddScoped<AdvertisementService>();
+        services.AddScoped<AdvertisementRepository>();
+        services.AddScoped<AdvertisementFeatureRepository>();
 
         var app = builder.Build();
 
@@ -39,7 +46,6 @@ public class Program
         }
 
         app.UseAuthorization();
-
 
         app.MapControllers();
 
