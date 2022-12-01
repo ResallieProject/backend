@@ -29,6 +29,5 @@ public class User : Model
     [StringLength(32)]
     public string Phone { get; set; }
 
-    [Timestamp]
     public DateTime? EmailVerifiedAt { get; set; }
 }
