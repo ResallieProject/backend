@@ -8,7 +8,7 @@ namespace Resallie.Controllers;
 [ApiController]
 public class AdvertisementController : ControllerBase
 {
-    private AdvertisementService _service;
+    private readonly AdvertisementService _service;
 
     public AdvertisementController(AdvertisementService service)
     {
