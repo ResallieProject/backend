@@ -36,7 +36,23 @@ public class Program
         services.AddScoped<AdvertisementRepository>();
         services.AddScoped<AdvertisementFeatureRepository>();
 
+        string[] origins = config["CorsOrigins"].Split(';');
+        
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllOrigins",
+                builder =>
+                {
+                    builder.WithOrigins(origins)
+                        .AllowCredentials()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+        });
+
         var app = builder.Build();
+        
+        app.UseCors("AllowAllOrigins");
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
