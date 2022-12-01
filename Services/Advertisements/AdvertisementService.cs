@@ -5,7 +5,7 @@ namespace Resallie.Services.Advertisements;
 
 public class AdvertisementService
 {
-    private AdvertisementRepository _repository;
+    private readonly AdvertisementRepository _repository;
 
     public AdvertisementService(AdvertisementRepository respository)
     {
