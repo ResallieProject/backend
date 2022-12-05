@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Resallie.Data;
+using Bogus;
+using Microsoft.EntityFrameworkCore;
 
 namespace Resallie.Models
 {
@@ -19,6 +22,24 @@ namespace Resallie.Models
         [Required] public int CategoryId { get; set; }
         
         public virtual Category? Category { get; set; }
+        
         public virtual ICollection<AdvertisementFeature>? Features { get; set; }
+
+        public override void Seed(AppDbContext appDbContext, int quantity)
+        {
+            if (!appDbContext.Advertisements.Any() || quantity > 0)
+            {
+                for(int i = 0; i < quantity; i++)
+                {
+                     appDbContext.Advertisements.Add( new Faker<Advertisement>()
+                    .RuleFor(m => m.Title, f => f.Commerce.ProductName())
+                    .RuleFor(m => m.Defects, f => f.Music.Genre())
+                    .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
+                    .RuleFor(m => m.CategoryId, f => 1)
+                    .RuleFor(m => m.CreatedAt, f => DateTime.Now));
+                }
+                appDbContext.SaveChanges();
+            }
+        }
     }
 }

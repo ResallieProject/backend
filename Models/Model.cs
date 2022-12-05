@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Resallie.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Resallie.Models
@@ -13,5 +14,10 @@ namespace Resallie.Models
 
         [Timestamp, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdatedAt { get; set; }
+
+        public virtual void Seed(AppDbContext appDbContext, int quantity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

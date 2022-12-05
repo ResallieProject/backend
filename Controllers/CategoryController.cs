@@ -9,7 +9,7 @@ namespace Resallie.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private CategoryService _service;
+        private readonly CategoryService _service;
 
         public CategoryController(CategoryService service)
         {
