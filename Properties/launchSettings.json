@@ -20,7 +20,7 @@
     },
     "Profile 1": {
       "commandName": "Project",
-      "commandLineArgs": "seeddata advertisements 5\r\n",
+      "commandLineArgs": "seeddata advertisements 3",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

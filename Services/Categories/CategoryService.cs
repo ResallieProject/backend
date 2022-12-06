@@ -12,9 +12,9 @@ namespace Resallie.Services.Categories
             _repository = repository;
         }
 
-        public List<Category> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
         {
-            return _repository.GetAllCategories();
+            return await _repository.GetAllCategories();
         }
     }
 }
