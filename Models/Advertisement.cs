@@ -22,6 +22,8 @@ namespace Resallie.Models
         [Required] public int CategoryId { get; set; }
         
         public virtual Category? Category { get; set; }
+        
+        public virtual ICollection<AdvertisementFeature>? Features { get; set; }
 
         public override void Seed(AppDbContext appDbContext, int quantity)
         {

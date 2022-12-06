@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Bogus;
 using Resallie.Data;
+using System.Diagnostics.CodeAnalysis;
 using Resallie.Models;
 
 namespace Resallie.Models
@@ -12,6 +13,11 @@ namespace Resallie.Models
         [Required] public string Name { get; set; }
         [StringLength(256)]
         [Required] public string Description { get; set; }
+        
+        [ForeignKey("CategoryId")]
+        public int? CategoryId { get; set; }
+        public virtual Category? ParentCategory { get; set; }
+
 
         public override void Seed(AppDbContext appDbContext, int quantity)
         {
