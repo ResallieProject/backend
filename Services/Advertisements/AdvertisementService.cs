@@ -5,13 +5,14 @@ namespace Resallie.Services.Advertisements;
 
 public class AdvertisementService
 {
-    private AdvertisementRepository _repository;
-    private AdvertisementFeatureRepository _afRepository;
+    private readonly AdvertisementRepository _repository;
+    private readonly AdvertisementFeatureRepository _afRepository;
 
     public AdvertisementService(AdvertisementRepository repository, AdvertisementFeatureRepository afRepository)
     {
         _repository = repository;
         _afRepository = afRepository;
+        
     }
 
     public async Task<Advertisement> Create(Advertisement advertisement)
