@@ -11,7 +11,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        //       Add services to the container.
         var serverVersion = new MySqlServerVersion(new Version(10, 9));
         var config = builder.Configuration;
         var services = builder.Services;
@@ -50,7 +50,7 @@ public class Program
                 });
         });
 
-        //seeder
+        ///Seeder
         services.AddTransient<DataSeeder>();
 
         var app = builder.Build();
@@ -72,20 +72,16 @@ public class Program
         }
 
         app.UseAuthorization();
-
         app.MapControllers();
-
         app.Run();
     }
 
     private static void SeedData(IHost app, string categoryname, int quantity)
     {
-        var scopedFactory = app.Services.GetService<IServiceScopeFactory>();  
-        
-        using (var scope = scopedFactory.CreateScope())
-        {
-            var service = scope.ServiceProvider.GetService<DataSeeder>();
-            service.Seed(categoryname, quantity);
-        }
+        var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+        using var scope = scopedFactory.CreateScope();
+        var service = scope.ServiceProvider.GetService<DataSeeder>();
+        service.Seed(categoryname, quantity);
     }
 }
