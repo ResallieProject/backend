@@ -86,6 +86,7 @@ public class Program
         {
             var service = scope.ServiceProvider.GetService<DataSeeder>();
             service.Seed(categoryname, quantity);
-        }
+            Environment.Exit(1);
+            }
     }
 }
