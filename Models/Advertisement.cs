@@ -29,7 +29,8 @@ namespace Resallie.Models
         {
             if (!appDbContext.Advertisements.Any() || quantity > 0)
             {
-                for(int i = 0; i < quantity; i++)
+                quantity = quantity == 0 ? quantity = 10 : quantity;
+                for (int i = 0; i < quantity; i++)
                 {
                      appDbContext.Advertisements.Add( new Faker<Advertisement>()
                     .RuleFor(m => m.Title, f => f.Commerce.ProductName())

@@ -23,8 +23,8 @@ public class Program
             .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging());
 
-
         services.AddControllers();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
@@ -53,9 +53,6 @@ public class Program
         //seeder
         services.AddTransient<DataSeeder>();
 
-        //seeder
-        services.AddTransient<DataSeeder>();
-
         var app = builder.Build();
         
         app.UseCors("AllowAllOrigins");
@@ -63,16 +60,9 @@ public class Program
         if (args.Length == 2 || args.Length == 3 && args[0].ToLower() == "seeddata")
         {
             string categoryname = args[1];
-            int quantity = int.Parse(args[2]) != null ? int.Parse(args[2]) : 0;
+            int quantity = args.Length > 2 ? int.Parse(args[2]) : 0;
             SeedData(app, categoryname, quantity);
-        }       
-
-        if (args.Length == 2 || args.Length == 3 && args[0].ToLower() == "seeddata")
-        {
-            string categoryname = args[1];
-            int quantity = int.Parse(args[2]) != null ? int.Parse(args[2]) : 0;
-            SeedData(app, categoryname, quantity);
-        }       
+        }            
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

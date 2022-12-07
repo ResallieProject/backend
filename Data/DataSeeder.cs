@@ -1,5 +1,4 @@
-﻿using Bogus;
-using Resallie.Models;
+﻿using Resallie.Models;
 
 namespace Resallie.Data
 {

@@ -23,7 +23,7 @@ namespace Resallie.Models
         {
             if (!appDbContext.Categories.Any() || quantity > 0)
             {
-
+                quantity= quantity == 0 ? quantity = 10 : quantity;
                 for (int i = 0; i < quantity; i++)
                 {
                      appDbContext.Categories.Add(new Faker<Category>()
