@@ -57,7 +57,8 @@ public class Program
         
         app.UseCors("AllowAllOrigins");
 
-        if (args.Length == 2 || args.Length == 3 && args[0].ToLower() == "seeddata")
+        if (args.Length == 2 || args.Length == 3 
+            && args[0].ToLower() == "seeddata")
         {
             string categoryname = args[1];
             int quantity = args.Length > 2 ? int.Parse(args[2]) : 0;
