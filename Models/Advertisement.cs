@@ -7,7 +7,7 @@ namespace Resallie.Models
 {
     public class Advertisement : Model
     {
-        #region Atributen
+        #region Attributen
         [StringLength(32)]
         [Required] public string Title { get; set; }
         [StringLength(512)]

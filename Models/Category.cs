@@ -8,7 +8,7 @@ namespace Resallie.Models
 {
     public class Category : Model
     {
-        #region Atributen
+        #region Attributen
         [StringLength(128)]
         [Required] public string Name { get; set; }
         [StringLength(256)]
