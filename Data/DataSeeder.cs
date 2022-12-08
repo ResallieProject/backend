@@ -28,4 +28,4 @@ namespace Resallie.Data
             ConvertionContext[categoryname].Seed(appDbContext, quantity);
         }
     }
-}
+}   
