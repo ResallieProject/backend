@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resallie", "Resallie.csproj", "{70CEA85A-0007-4FEE-AA0E-1BBA19883614}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resallie", "Resallie.csproj", "{70CEA85A-0007-4FEE-AA0E-1BBA19883614}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resallie.Tests", "Resallie.Tests\Resallie.Tests.csproj", "{CE12ADFF-A62B-44D0-A135-E901860C1D2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{70CEA85A-0007-4FEE-AA0E-1BBA19883614}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70CEA85A-0007-4FEE-AA0E-1BBA19883614}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70CEA85A-0007-4FEE-AA0E-1BBA19883614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE12ADFF-A62B-44D0-A135-E901860C1D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE12ADFF-A62B-44D0-A135-E901860C1D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE12ADFF-A62B-44D0-A135-E901860C1D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE12ADFF-A62B-44D0-A135-E901860C1D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC7753C4-D78E-4DD0-A4B1-5B1B63D26761}
 	EndGlobalSection
 EndGlobal

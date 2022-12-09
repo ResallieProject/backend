@@ -1,11 +1,10 @@
 ﻿using Resallie.Controllers;
-using FakeItEasy;
 using Resallie.Services.Advertisements;
 using Resallie.Models;
 using Resallie.Data;
 using Resallie.Respositories.Advertisements;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using FakeItEasy;
 
 namespace Resallie.Tests.Advertisement
 {

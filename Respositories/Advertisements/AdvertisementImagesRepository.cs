@@ -30,7 +30,7 @@ namespace Resallie.Respositories.Advertisements
             }
 
             await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
-            await _ctx.Entry(advertisement).Collection(ad => ad.).LoadAsync();
+            //await _ctx.Entry(advertisement).Collection(ad => ad.).LoadAsync();
 
             return advertisement;
         }

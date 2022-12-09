@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\Resallie.csproj" />
+    <ProjectReference Include="..\Resallie.csproj" />
   </ItemGroup>
 
 </Project>
