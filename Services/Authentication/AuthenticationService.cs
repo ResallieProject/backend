@@ -1,4 +1,8 @@
-﻿using Resallie.Data.Dto;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Resallie.Data.Dto;
 using Resallie.Models;
 using Resallie.Requests.Authentication;
 using Resallie.Respositories.Authentication;
@@ -8,10 +12,12 @@ namespace Resallie.Services.Authentication;
 public class AuthenticationService
 {
     private AuthenticationRepository _repository;
+    private IConfiguration _config;
 
-    public AuthenticationService(AuthenticationRepository repository)
+    public AuthenticationService(AuthenticationRepository repository, IConfiguration config)
     {
         _repository = repository;
+        _config = config;
     }
 
     public async Task<UserDto?> RegisterUser(User user)
@@ -29,7 +35,7 @@ public class AuthenticationService
         return dto;
     }
     
-    public async Task<UserDto?> AuthenticateUser(string email, string password)
+    public async Task<string?> AuthenticateUser(string email, string password)
     {
         var user = await _repository.FindUserByEmail(email);
         if (user == null) return null;
@@ -37,8 +43,34 @@ public class AuthenticationService
         var isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
         if (!isValid) return null;
         
-        // User? user = await _repository.UpdateUserToken(request.Id, request.Token);
+        Console.WriteLine(_config["Jwt:Key"]);
+        
+        var issuer = _config["Jwt:Issuer"];
+        var audience = _config["Jwt:Audience"];
+        var key = Encoding.ASCII.GetBytes
+            (_config["Jwt:Key"]);
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim("Id", Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.FirstName + " " + user.LastName),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti,
+                    Guid.NewGuid().ToString())
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(60 * 24), // expires in 1 day
+            Issuer = issuer,
+            Audience = audience,
+            SigningCredentials = new SigningCredentials
+            (new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha512Signature)
+        };
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var jwtToken = tokenHandler.WriteToken(token);
+        var stringToken = tokenHandler.WriteToken(token);
 
-        return new UserDto(user);
+        return stringToken;
     }
 }
