@@ -72,6 +72,7 @@ public class Program
 
         services.AddScoped<AuthenticationRepository>();
         services.AddScoped<AuthenticationService>();
+        services.AddScoped<TokenService>();
 
         string[] origins = config["CorsOrigins"].Split(';');
 
