@@ -58,6 +58,8 @@ public class Program
                 ValidateIssuerSigningKey = true
             };
         });
+
+        services.AddAuthorization();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
@@ -109,8 +111,8 @@ public class Program
             app.UseSwaggerUI();
         }
 
-        app.UseAuthorization();
         app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapControllers();
 

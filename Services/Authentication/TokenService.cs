@@ -19,12 +19,13 @@ public class TokenService
     {
         var key = Encoding.UTF8.GetBytes
             (_config["Jwt:Key"]);
+        
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("Id", Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.FirstName + " " + user.LastName),
+                new Claim(JwtRegisteredClaimNames.Name, user.FirstName + " " + user.LastName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti,
                     Guid.NewGuid().ToString())
