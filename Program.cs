@@ -82,6 +82,8 @@ public class Program
             };
         });
 
+        services.AddAuthorization();
+
         var app = builder.Build();
         
         app.UseCors("AllowAllOrigins");
