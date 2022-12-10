@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Resallie.Models;
 using Resallie.Requests.Authentication;
 using Resallie.Services.Authentication;
@@ -17,6 +18,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("Register")]
+    [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody] User request)
     {
         var user = await _service.RegisterUser(request);
@@ -28,6 +30,7 @@ public class AuthenticationController : ControllerBase
     }
     
     [HttpPost("Authenticate")]
+    [AllowAnonymous]
     public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
     {
         var user = await _service.AuthenticateUser(request.Email, request.Password);

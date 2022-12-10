@@ -77,6 +77,7 @@ public class Program
         }
 
         app.UseAuthorization();
+        app.UseAuthentication();
 
         app.MapControllers();
 
