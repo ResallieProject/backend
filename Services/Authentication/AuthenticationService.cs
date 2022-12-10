@@ -1,5 +1,6 @@
 ﻿using Resallie.Data.Dto;
 using Resallie.Models;
+using Resallie.Requests.Authentication;
 using Resallie.Respositories.Authentication;
 
 namespace Resallie.Services.Authentication;
@@ -26,5 +27,18 @@ public class AuthenticationService
         );
 
         return dto;
+    }
+    
+    public async Task<UserDto?> AuthenticateUser(string email, string password)
+    {
+        var user = await _repository.FindUserByEmail(email);
+        if (user == null) return null;
+
+        var isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+        if (!isValid) return null;
+        
+        // User? user = await _repository.UpdateUserToken(request.Id, request.Token);
+
+        return new UserDto(user);
     }
 }

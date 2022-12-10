@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resallie.Models;
+using Resallie.Requests.Authentication;
 using Resallie.Services.Authentication;
 
 namespace Resallie.Controllers.Authentication;
@@ -22,6 +23,17 @@ public class AuthenticationController : ControllerBase
         
         if (user == null)
             return BadRequest(new { message = "Email is already taken" });
+
+        return Ok(user);
+    }
+    
+    [HttpPost("Authenticate")]
+    public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
+    {
+        var user = await _service.AuthenticateUser(request.Email, request.Password);
+
+        if (user == null)
+            return BadRequest(new { message = "Username or password is incorrect" });
 
         return Ok(user);
     }
