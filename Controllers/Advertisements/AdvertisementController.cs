@@ -28,6 +28,8 @@ public class AdvertisementController : BaseController
     {
         if (advertisement.Category != null) return BadRequest();
 
+        advertisement.UserId = GetCurrentUserId();
+
         advertisement = await _service.Create(advertisement);
 
         return Ok(advertisement);
