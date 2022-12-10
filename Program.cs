@@ -71,7 +71,7 @@ public class Program
         {
             Byte[] signingKey = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
             
-            if (signingKey.Length < 32)
+            if (signingKey.Length <= 32)
             {
                 throw new Exception("JWT key must be at least 32 characters long");
             }
