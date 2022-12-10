@@ -12,18 +12,19 @@ public class AuthenticationService
     {
         _repository = repository;
     }
-    
+
     public async Task<UserDto?> RegisterUser(User user)
     {
         var exists = await _repository.FindUserByEmail(user.Email);
         if (exists != null) return null;
-        
-        
-        
+
+        var salt = BCrypt.Net.BCrypt.GenerateSalt();
+        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
+
         var dto = new UserDto(
             await _repository.RegisterUser(user)
         );
-        
+
         return dto;
     }
 }

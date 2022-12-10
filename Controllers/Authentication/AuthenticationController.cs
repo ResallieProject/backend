@@ -15,10 +15,13 @@ public class AuthenticationController : ControllerBase
         _service = service;
     }
 
-    [HttpPost]
-    async Task<IActionResult> Register([FromBody] User request)
+    [HttpPost("Register")]
+    public async Task<IActionResult> Register([FromBody] User request)
     {
         var user = await _service.RegisterUser(request);
+        
+        if (user == null)
+            return BadRequest(new { message = "Email is already taken" });
 
         return Ok(user);
     }
