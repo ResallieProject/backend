@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
 using Resallie.Services.Advertisements;
@@ -6,6 +5,7 @@ using Resallie.Services.Categories;
 using Resallie.Respositories.Advertisements;
 using Resallie.Respositories.Authentication;
 using Resallie.Respositories.Categories;
+using AuthenticationService = Resallie.Services.Authentication.AuthenticationService;
 
 public class Program
 {
