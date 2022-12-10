@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Resallie.Models;
 
@@ -9,7 +8,6 @@ public class User : Model
     [Required]
     public string Email { get; set; }
     
-    [JsonIgnore]
     [StringLength(512)]
     [Required]
     public string Password { get; set; }

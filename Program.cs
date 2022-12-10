@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
 using Resallie.Services.Advertisements;
 using Resallie.Services.Categories;
 using Resallie.Respositories.Advertisements;
+using Resallie.Respositories.Authentication;
 using Resallie.Respositories.Categories;
 
 public class Program
@@ -35,6 +37,9 @@ public class Program
         services.AddScoped<AdvertisementService>();
         services.AddScoped<AdvertisementRepository>();
         services.AddScoped<AdvertisementFeatureRepository>();
+        
+        services.AddScoped<AuthenticationRepository>();
+        services.AddScoped<AuthenticationService>();
 
         string[] origins = config["CorsOrigins"].Split(';');
         
