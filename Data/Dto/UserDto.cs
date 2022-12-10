@@ -9,6 +9,7 @@ public class UserDto
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
+    public string? Gender { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
@@ -18,6 +19,7 @@ public class UserDto
         FirstName = user.FirstName;
         LastName = user.LastName;
         Email = user.Email;
+        Gender = user.Gender;
         CreatedAt = user.CreatedAt;
         UpdatedAt = user.UpdatedAt;
     }
