@@ -69,12 +69,19 @@ public class Program
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
+            Byte[] signingKey = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+            
+            if (signingKey.Length < 32)
+            {
+                throw new Exception("JWT key must be at least 32 characters long");
+            }
+            
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidIssuer = builder.Configuration["Jwt:Issuer"],
                 ValidAudience = builder.Configuration["Jwt:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    (signingKey),
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = false,

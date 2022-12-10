@@ -43,8 +43,6 @@ public class AuthenticationService
         var isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
         if (!isValid) return null;
         
-        Console.WriteLine(_config["Jwt:Key"]);
-        
         var issuer = _config["Jwt:Issuer"];
         var audience = _config["Jwt:Audience"];
         var key = Encoding.ASCII.GetBytes
