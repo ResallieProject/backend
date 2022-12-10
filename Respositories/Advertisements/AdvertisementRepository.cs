@@ -68,4 +68,15 @@ public class AdvertisementRepository
         
         return await Get(advertisement.Id);
     }
+
+    public async Task<Advertisement> FindExisting(int id)
+    {
+            var advertisement = await _ctx.Advertisements.FindAsync(id);
+        if (advertisement == null)
+        {
+            throw new Exception("Advertisement not found");
+        }
+
+        return advertisement;
+    }
 }

@@ -23,6 +23,7 @@ public class AdvertisementController : BaseController
         return _service.GetAll();
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] Advertisement advertisement)
     {
@@ -35,7 +36,6 @@ public class AdvertisementController : BaseController
         return Ok(advertisement);
     }
 
-    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
@@ -46,26 +46,33 @@ public class AdvertisementController : BaseController
         return Ok(advertisement);
     }
     
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
+        bool isOwner = await _service.IsAdvertisementOwner(GetCurrentUserId(), id);
+        if (!isOwner) return Forbid();
+        
         bool success = await _service.Delete(id);
 
-        if (!success) return NotFound();
+        if (!success) return BadRequest();
 
         return Ok();
     }
     
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Advertisement advertisement)
     {
         if (advertisement.Category != null) return BadRequest();
         
+        bool isOwner = await _service.IsAdvertisementOwner(GetCurrentUserId(), id);
+        if (!isOwner) return Forbid();
+        
         Advertisement? oldAdvertisement = await _service.Get(id);
         if (oldAdvertisement == null) return NotFound();
         
         advertisement = await _service.Update(advertisement, oldAdvertisement);
-
 
         return Ok(advertisement);
     }
