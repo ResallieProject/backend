@@ -23,6 +23,10 @@ namespace Resallie.Models
         
         public virtual Category? Category { get; set; }
         
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public virtual User? User { get; set; }
+        
         public virtual ICollection<AdvertisementFeature>? Features { get; set; }
 
         public override void Seed(AppDbContext appDbContext, int quantity)
