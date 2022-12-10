@@ -7,7 +7,7 @@ namespace Resallie.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
         private readonly CategoryService _service;
 

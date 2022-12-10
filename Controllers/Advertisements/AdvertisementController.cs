@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Resallie.Models;
 using Resallie.Services.Advertisements;
@@ -7,7 +8,7 @@ namespace Resallie.Controllers.Advertisements;
 
 [Route("[controller]")]
 [ApiController]
-public class AdvertisementController : ControllerBase
+public class AdvertisementController : BaseController
 {
     private readonly AdvertisementService _service;
 
@@ -39,7 +40,7 @@ public class AdvertisementController : ControllerBase
         Advertisement? advertisement = await _service.Get(id);
         
         if (advertisement == null) return NotFound();
-
+        
         return Ok(advertisement);
     }
     
