@@ -12,12 +12,12 @@ namespace Resallie.Services.Authentication;
 public class AuthenticationService
 {
     private AuthenticationRepository _repository;
-    private IConfiguration _config;
+    private TokenService _tokenService;
 
-    public AuthenticationService(AuthenticationRepository repository, IConfiguration config)
+    public AuthenticationService(AuthenticationRepository repository, TokenService tokenService)
     {
         _repository = repository;
-        _config = config;
+        _tokenService = tokenService;
     }
 
     public async Task<UserDto?> RegisterUser(User user)
@@ -43,32 +43,8 @@ public class AuthenticationService
         var isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
         if (!isValid) return null;
         
-        var issuer = _config["Jwt:Issuer"];
-        var audience = _config["Jwt:Audience"];
-        var key = Encoding.ASCII.GetBytes
-            (_config["Jwt:Key"]);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim("Id", Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.FirstName + " " + user.LastName),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti,
-                    Guid.NewGuid().ToString())
-            }),
-            Expires = DateTime.UtcNow.AddMinutes(60 * 24), // expires in 1 day
-            Issuer = issuer,
-            Audience = audience,
-            SigningCredentials = new SigningCredentials
-            (new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha512Signature)
-        };
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        var jwtToken = tokenHandler.WriteToken(token);
-        var stringToken = tokenHandler.WriteToken(token);
+        string jwtToken = _tokenService.CreateJWtToken(user);
 
-        return stringToken;
+        return jwtToken;
     }
 }
