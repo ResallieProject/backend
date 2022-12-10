@@ -5,16 +5,16 @@ using Microsoft.IdentityModel.Tokens;
 using Resallie.Data.Dto;
 using Resallie.Models;
 using Resallie.Requests.Authentication;
-using Resallie.Respositories.Authentication;
+using Resallie.Respositories.Users;
 
 namespace Resallie.Services.Authentication;
 
 public class AuthenticationService
 {
-    private AuthenticationRepository _repository;
+    private UserRepository _repository;
     private TokenService _tokenService;
 
-    public AuthenticationService(AuthenticationRepository repository, TokenService tokenService)
+    public AuthenticationService(UserRepository repository, TokenService tokenService)
     {
         _repository = repository;
         _tokenService = tokenService;
@@ -29,7 +29,7 @@ public class AuthenticationService
         user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt);
 
         var dto = new UserDto(
-            await _repository.RegisterUser(user)
+            await _repository.Create(user)
         );
 
         return dto;

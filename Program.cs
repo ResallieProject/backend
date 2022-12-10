@@ -6,7 +6,7 @@ using Resallie.Data;
 using Resallie.Services.Advertisements;
 using Resallie.Services.Categories;
 using Resallie.Respositories.Advertisements;
-using Resallie.Respositories.Authentication;
+using Resallie.Respositories.Users;
 using Resallie.Respositories.Categories;
 using Resallie.Services.Authentication;
 
@@ -72,7 +72,7 @@ public class Program
         services.AddScoped<AdvertisementRepository>();
         services.AddScoped<AdvertisementFeatureRepository>();
 
-        services.AddScoped<AuthenticationRepository>();
+        services.AddScoped<UserRepository>();
         services.AddScoped<AuthenticationService>();
         services.AddScoped<TokenService>();
 
