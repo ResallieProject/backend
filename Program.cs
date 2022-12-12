@@ -77,14 +77,14 @@ public class Program
         app.Run();
     }
 
-    private static void SeedData(IHost app, string categoryname, int quantity)
+    private static void SeedData(IHost app, string tableName, int quantity)
     {
         var scopedFactory = app.Services.GetService<IServiceScopeFactory>();  
         
         using (var scope = scopedFactory.CreateScope())
         {
             var service = scope.ServiceProvider.GetService<DataSeeder>();
-            service.Seed(categoryname, quantity);
+            service.Seed(tableName, quantity);
             Environment.Exit(1);
             }
     }

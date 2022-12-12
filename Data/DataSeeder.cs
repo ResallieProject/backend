@@ -18,14 +18,14 @@ namespace Resallie.Data
             };
         }
 
-        public void Seed(string categoryname, int quantity)
+        public void Seed(string tableName, int quantity)
         {
-            if (!ConvertionContext.ContainsKey(categoryname))
+            if (!ConvertionContext.ContainsKey(tableName))
             {
                 return;
             }
 
-            ConvertionContext[categoryname].Seed(appDbContext, quantity);
+            ConvertionContext[tableName].Seed(appDbContext, quantity);
         }
     }
 }   
