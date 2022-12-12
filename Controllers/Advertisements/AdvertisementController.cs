@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Resallie.Models;
 using Resallie.Services.Advertisements;
 
-namespace Resallie.Controllers;
+namespace Resallie.Controllers.Advertisements;
 
 [Route("[controller]")]
 [ApiController]
@@ -31,6 +32,7 @@ public class AdvertisementController : ControllerBase
         return Ok(advertisement);
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
