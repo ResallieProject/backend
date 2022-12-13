@@ -8,7 +8,10 @@ public class AdvertisementService
     private AdvertisementRepository _repository;
     private AdvertisementFeatureRepository _afRepository;
 
-    public AdvertisementService(AdvertisementRepository repository, AdvertisementFeatureRepository afRepository)
+    public AdvertisementService(
+        AdvertisementRepository repository, 
+        AdvertisementFeatureRepository afRepository
+        )
     {
         _repository = repository;
         _afRepository = afRepository;
@@ -51,8 +54,20 @@ public class AdvertisementService
 
         oldAdvertisement.Features = advertisement.Features;
         
-        await _repository.Update(oldAdvertisement);
+        advertisement = await _repository.Update(oldAdvertisement);
         
         return advertisement;
+    }
+    
+    public async Task<bool> IsAdvertisementOwner(int userId, int advertisementId)
+    {
+        Advertisement? advertisement = await _repository.Get(advertisementId);
+        
+        if (advertisement == null)
+        {
+            return false;
+        }
+        
+        return advertisement.UserId == userId;
     }
 }

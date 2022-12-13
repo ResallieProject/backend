@@ -8,7 +8,7 @@ namespace Resallie.Controllers.Authentication;
 
 [Route("[controller]")]
 [ApiController]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : BaseController
 {
     private readonly AuthenticationService _service;
 
