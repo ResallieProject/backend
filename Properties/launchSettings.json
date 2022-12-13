@@ -18,9 +18,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Profile 1": {
+    "Test 2 seeded categories": {
       "commandName": "Project",
-      "commandLineArgs": "seeddata advertisements 5",
+      "commandLineArgs": "seeddata categories 2",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

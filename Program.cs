@@ -97,7 +97,8 @@ public class Program
 
         app.UseCors("AllowAllOrigins");
 
-        if (args.Length == 2 || args.Length == 3 && args[0].ToLower() == "seeddata")
+        if (args.Length == 2 || args.Length == 3 
+            && args[0].ToLower() == "seeddata")
         {
             string categoryname = args[1];
             int quantity = args.Length > 2 ? int.Parse(args[2]) : 0;
@@ -113,20 +114,19 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
-
         app.MapControllers();
-
         app.Run();
     }
 
-    private static void SeedData(IHost app, string categoryname, int quantity)
+    private static void SeedData(IHost app, string tableName, int quantity)
     {
         var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 
         using (var scope = scopedFactory.CreateScope())
         {
             var service = scope.ServiceProvider.GetService<DataSeeder>();
-            service.Seed(categoryname, quantity);
-        }
+            service.Seed(tableName, quantity);
+            Environment.Exit(1);
+            }
     }
 }
