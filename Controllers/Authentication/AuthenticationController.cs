@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Resallie.Models;
 using Resallie.Requests.Authentication;
+using Resallie.Responses.Authentication;
 using Resallie.Services.Authentication;
 
 namespace Resallie.Controllers.Authentication;
@@ -33,11 +34,11 @@ public class AuthenticationController : BaseController
     [AllowAnonymous]
     public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
     {
-        var user = await _service.AuthenticateUser(request.Email, request.Password);
+        var token = await _service.AuthenticateUser(request.Email, request.Password);
 
-        if (user == null)
+        if (token == null)
             return BadRequest(new { message = "Username or password is incorrect" });
 
-        return Ok(user);
+        return Ok(new AuthenticatedResponse(token));
     }
 }
