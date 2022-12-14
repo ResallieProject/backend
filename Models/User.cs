@@ -5,6 +5,7 @@ namespace Resallie.Models;
 public class User : Model
 {
     [StringLength(128)]
+    [EmailAddress]
     [Required]
     public string Email { get; set; }
     
