@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
-using Resallie.Models;
+using Resallie.Models.Advertisements;
 
 namespace Resallie.Respositories.Advertisements;
 

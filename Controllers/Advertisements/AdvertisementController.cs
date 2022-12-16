@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resallie.Models;
+using Resallie.Models.Advertisements;
 using Resallie.Services.Advertisements;
 
 namespace Resallie.Controllers.Advertisements;
