@@ -15,7 +15,14 @@ namespace Resallie.Respositories.Categories
 
         public async Task<List<Category>> GetAllCategories()
         {
-            return await _ctx.Categories.ToListAsync();
+            var categories =  await _ctx.Categories
+                .Where(c => c.CategoryId == null)
+                .Include(c => c.Children
+                    .OrderBy(child => child.Id)
+                )
+                .ToListAsync();
+            
+            return categories;
         }
     }
 }

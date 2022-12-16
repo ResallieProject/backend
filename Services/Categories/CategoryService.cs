@@ -14,7 +14,9 @@ namespace Resallie.Services.Categories
 
         public async Task<List<Category>> GetAllCategories()
         {
-            return await _repository.GetAllCategories();
+            List<Category> categories = await _repository.GetAllCategories();
+            
+            return categories;
         }
     }
 }
