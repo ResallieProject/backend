@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Resallie.Models
+namespace Resallie.Models.Advertisements
 {
     public class AdvertisementFeature
     {
@@ -10,12 +10,12 @@ namespace Resallie.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [JsonIgnore]
         public int Id { get; set; }
-        
+
         [StringLength(256)]
         [Required] public string Key { get; set; }
         [StringLength(256)]
         [Required] public string Value { get; set; }
-        
+
         [JsonIgnore]
         [ForeignKey("Advertisement")]
         [Required] public int AdvertisementId { get; set; }

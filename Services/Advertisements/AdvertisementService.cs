@@ -1,4 +1,4 @@
-﻿using Resallie.Models;
+﻿using Resallie.Models.Advertisements;
 using Resallie.Respositories.Advertisements;
 
 namespace Resallie.Services.Advertisements;
@@ -18,8 +18,7 @@ public class AdvertisementService
     }
 
     public async Task<Advertisement> Create(Advertisement advertisement)
-    {
-        
+    {        
         await _repository.Create(advertisement);
 
         return advertisement;
