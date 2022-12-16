@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Resallie.Data;
 using Bogus;
 
@@ -8,7 +9,6 @@ namespace Resallie.Models
 {
     public class Category : Model
     {
-        #region Attributen
         [StringLength(128)]
         [Required] public string Name { get; set; }
         [StringLength(256)]
@@ -16,8 +16,10 @@ namespace Resallie.Models
         
         [ForeignKey("CategoryId")]
         public int? CategoryId { get; set; }
+        // This prevents EF from doing kaboom (otherwise it would load the parent and create an infinite loop that consumes the universe)
+        [JsonIgnore] 
         public virtual Category? ParentCategory { get; set; }
-        #endregion
+        public virtual ICollection<Category>? Children { get; set; }
 
         public override void Seed(AppDbContext appDbContext, int quantity)
         {

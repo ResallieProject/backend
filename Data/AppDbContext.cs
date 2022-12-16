@@ -22,6 +22,11 @@ public class AppDbContext : DbContext
         
         builder.Entity<Category>().Property(a => a.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
+        builder.Entity<Category>()
+            .HasOne(c => c.ParentCategory)
+            .WithMany(c => c.Children)
+            .HasForeignKey(c => c.CategoryId);
         
         builder.Entity<User>().Property(a => a.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
