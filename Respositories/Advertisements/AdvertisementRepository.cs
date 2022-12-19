@@ -45,6 +45,7 @@ public class AdvertisementRepository
 
         await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
         await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
+        //await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
 
         return advertisement;
     }
@@ -67,6 +68,7 @@ public class AdvertisementRepository
         {
             await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
             await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
+            //await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
         }
 
         return advertisements;

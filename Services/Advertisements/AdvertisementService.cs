@@ -4,6 +4,7 @@ using Resallie.Respositories.Advertisements;
 namespace Resallie.Services.Advertisements;
 
 public class AdvertisementService
+
 {
     private AdvertisementRepository _repository;
     private AdvertisementFeatureRepository _afRepository;
@@ -52,6 +53,8 @@ public class AdvertisementService
         await _afRepository.DeleteMany(oldAdvertisement.Id);
 
         oldAdvertisement.Features = advertisement.Features;
+
+        oldAdvertisement.Images = advertisement.Images;
         
         advertisement = await _repository.Update(oldAdvertisement);
         

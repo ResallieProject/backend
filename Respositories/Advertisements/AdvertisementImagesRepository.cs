@@ -13,6 +13,10 @@ namespace Resallie.Respositories.Advertisements
             _ctx = ctx;
         }
 
+        public void Upload()
+        {
+
+        }
 
     }
 }
