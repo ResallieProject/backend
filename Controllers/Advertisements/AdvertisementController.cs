@@ -23,7 +23,7 @@ public class AdvertisementController : BaseController
         return _service.GetAll();
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] Advertisement advertisement)
     {

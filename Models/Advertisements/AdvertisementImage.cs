@@ -7,8 +7,8 @@ namespace Resallie.Models.Advertisements
     public class AdvertisementImage : Model
     {
         [Required]
-        string Path { get; set; }
-        /*u*/ int Order { get; set; }
+        public string Path { get; set; }
+        public /*u*/ int Order { get; set; }
 
         [JsonIgnore]
         [ForeignKey("Advertisement")]
