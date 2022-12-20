@@ -25,7 +25,9 @@ namespace Resallie.Data
                 return;
             }
 
-            ConvertionContext[tableName].Seed(appDbContext, quantity);
+            //ConvertionContext[tableName].Seed(appDbContext, quantity);
+
         }
+
     }
 }   

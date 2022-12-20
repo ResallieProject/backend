@@ -1,4 +1,5 @@
 ﻿using Resallie.Data;
+using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,11 @@ namespace Resallie.Models
         public virtual void Seed(AppDbContext appDbContext, int quantity)
         {
             throw new NotImplementedException();
+        }
+
+        static public Model GetTable(string input)
+        {
+            (Assembly.GetExecutingAssembly()).CreateInstance(input);
         }
     }
 }

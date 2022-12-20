@@ -31,20 +31,13 @@ namespace Resallie.Models
 
         public override void Seed(AppDbContext appDbContext, int quantity)
         {
-            if (!appDbContext.Advertisements.Any() || quantity > 0)
-            {
-                quantity = quantity == 0 ? quantity = 10 : quantity;
-                for (int i = 0; i < quantity; i++)
-                {
-                     appDbContext.Advertisements.Add( new Faker<Advertisement>()
+                appDbContext.Advertisements.Add(new Faker<Advertisement>()
                     .RuleFor(m => m.Title, f => f.Commerce.ProductName())
                     .RuleFor(m => m.Defects, f => f.Music.Genre())
                     .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
                     .RuleFor(m => m.CategoryId, f => 1)
+                    .RuleFor(m => m.UserId, f => f.Random.Int(0,10))
                     .RuleFor(m => m.CreatedAt, f => DateTime.Now));
-                }
-                appDbContext.SaveChanges();
-            }
         }
     }
 }
