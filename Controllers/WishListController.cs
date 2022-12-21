@@ -11,13 +11,11 @@ namespace Resallie.Controllers
     [ApiController]
     public class WishListController : Controller
     {
-        private readonly IBaseService<UserWishList> _service;
+        private IBaseService<UserWishList> _service;
 
         public WishListController (UserWishListService service)
         {
             _service = service;
         }
-
-
     }
 }
