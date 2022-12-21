@@ -9,6 +9,8 @@ using Resallie.Respositories.Advertisements;
 using Resallie.Respositories.Users;
 using Resallie.Respositories.Categories;
 using Resallie.Services.Authentication;
+using Microsoft.Extensions.FileProviders;
+using Bogus.DataSets;
 
 public class Program
 {
@@ -112,6 +114,12 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images")),
+            RequestPath = "/Images"
+        });
+            
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
@@ -127,6 +135,6 @@ public class Program
             var service = scope.ServiceProvider.GetService<DataSeeder>();
             service.Seed(tableName, quantity);
             Environment.Exit(1);
-            }
+        }
     }
 }
