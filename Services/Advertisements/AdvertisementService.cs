@@ -8,18 +8,24 @@ public class AdvertisementService
 {
     private AdvertisementRepository _repository;
     private AdvertisementFeatureRepository _afRepository;
+    private AdvertisementImagesRepository _aiRepository;
 
     public AdvertisementService(
-        AdvertisementRepository repository, 
-        AdvertisementFeatureRepository afRepository
+        AdvertisementRepository repository,
+        AdvertisementFeatureRepository afRepository, AdvertisementImagesRepository aiRepository
         )
     {
         _repository = repository;
         _afRepository = afRepository;
+        _aiRepository = aiRepository;
     }
 
     public async Task<Advertisement> Create(Advertisement advertisement)
-    {        
+    {
+        if(advertisement.Images.Count > 0)
+        {
+            await _aiRepository.StoreImages(advertisement, );
+        }
         await _repository.Create(advertisement);
 
         return advertisement;
