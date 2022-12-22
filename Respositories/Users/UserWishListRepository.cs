@@ -1,9 +1,7 @@
 ﻿using Resallie.Data;
-using Resallie.Models;
 using Resallie.Respositories.Base;
-using Resallie.Respositories.Interfaces;
 
-namespace Resallie.Services
+namespace Resallie.Respositories.Users
 {
     public class UserWishListRepository : BaseRepository
     {
