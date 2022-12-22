@@ -8,22 +8,21 @@ namespace Resallie.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserWishListController : Controller
+    public class UserWishListController : BaseController
     {
-        private readonly IBaseService<UserWishList> _service;
+        private readonly UserWishListService _service;
 
-        public UserWishListController (UserWishListService service)
+        public UserWishListController (IBaseService<UserWishList> service)
         {
-            _service = (IBaseService<UserWishList>)service;
+            _service = (UserWishListService)service;
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Index()
         {
             return Ok(
-                await _service.GetAllFromThisUser();
+                await _service.GetAllFromThisUser(GetCurrentUserId()));
         }
-
     }
 }

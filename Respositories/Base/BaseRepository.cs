@@ -1,6 +1,7 @@
 ﻿using Resallie.Data;
 using Resallie.Models;
 using Resallie.Respositories.Interfaces;
+using Resallie.Respositories.Users;
 
 namespace Resallie.Respositories.Base
 {
