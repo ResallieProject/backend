@@ -21,6 +21,8 @@ namespace Resallie.Controllers
         //[Authorize]
         public async Task<IActionResult> Index()
         {
+            var id = GetCurrentUserId();
+            return null;
             return Ok(
                 await _service.GetAllFromThisUser(GetCurrentUserId()));
         }

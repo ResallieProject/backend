@@ -10,6 +10,7 @@ using Resallie.Respositories.Users;
 using Resallie.Respositories.Categories;
 using Resallie.Services.Authentication;
 using Resallie;
+using Resallie.Services;
 
 public class Program
 {
@@ -74,6 +75,8 @@ public class Program
         services.AddScoped<AdvertisementFeatureRepository>();
 
         services.AddScoped<UserRepository>();
+        services.AddScoped<UserWishListService>();
+        services.AddScoped<UserWishListRepository>();
         services.AddScoped<AuthenticationService>();
         services.AddScoped<TokenService>();
 
@@ -91,7 +94,7 @@ public class Program
                 });
         });
 
-        //seeder
+        ///Seeder
         services.AddTransient<DataSeeder>();
 
         var app = builder.Build();

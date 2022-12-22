@@ -7,11 +7,11 @@ namespace Resallie.Services.Base
 {
     public abstract class BaseService : IBaseService<Model>
     {
-        protected BaseRepository _repository;
-        public BaseService (IBaseRepositoy<Model> repository)
-        {
-            _repository = (BaseRepository)repository;
-        }
+        //protected BaseRepository _repository;
+        //public BaseService (IBaseRepositoy<Model> repository)
+        //{
+        //    _repository = (BaseRepository)repository;
+        //}
 
         public Task<Model> Create(Model t)
         {
