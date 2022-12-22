@@ -11,6 +11,9 @@ using Resallie.Respositories.Categories;
 using Resallie.Services.Authentication;
 using Resallie;
 using Resallie.Services;
+using Resallie.Models;
+using Resallie.Controllers.Interfaces;
+using Resallie.Respositories.Interfaces;
 
 public class Program
 {
@@ -67,18 +70,18 @@ public class Program
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddScoped<CategoryRepository>();
         services.AddScoped<CategoryService>();
+        services.AddScoped<CategoryRepository>();
 
         services.AddScoped<AdvertisementService>();
         services.AddScoped<AdvertisementRepository>();
         services.AddScoped<AdvertisementFeatureRepository>();
 
-        services.AddScoped<UserRepository>();
-        services.AddScoped<UserWishListService>();
-        services.AddScoped<UserWishListRepository>();
         services.AddScoped<AuthenticationService>();
         services.AddScoped<TokenService>();
+        services.AddScoped<UserRepository>();
+        services.AddScoped<IBaseService<UserWishList>, UserWishListService>();
+        services.AddScoped<IBaseRepositoy<UserWishList>, UserWishListRepository>();
 
         string[] origins = config["CorsOrigins"].Split(';');
 

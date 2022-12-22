@@ -8,7 +8,7 @@ namespace Resallie.Services
 {
     public class UserWishListService : BaseService
     {
-        readonly UserWishListRepository _repository;
+        UserWishListRepository _repository;
         public UserWishListService(IBaseService<UserWishListRepository> repository)
         {
             _repository = (UserWishListRepository)repository;
@@ -16,7 +16,7 @@ namespace Resallie.Services
 
         public async Task<List<UserWishList>> GetAllFromThisUser(int UserId)
         {
-            return await (_repository.GetAllFromThisUser(UserId);
+            return await _repository.GetAllFromThisUser(UserId);
         }
 
         //public UserWishListService(IBaseRepositoy<UserWishList> repository) 
