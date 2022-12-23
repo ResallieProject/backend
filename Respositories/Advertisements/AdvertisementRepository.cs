@@ -49,9 +49,20 @@ public class AdvertisementRepository
         return advertisement;
     }
 
-    public async Task<List<Advertisement>> GetAll()
+    public async Task<List<Advertisement>> GetAll(string? searchParams)
     {
-        var advertisements = await _ctx.Advertisements.ToListAsync();
+        List<Advertisement> advertisements;
+        
+        if (searchParams != null)
+        {
+            advertisements = await _ctx.Advertisements.Where(ad =>
+                ad.Title.Contains(searchParams) || ad.Description.Contains(searchParams)).ToListAsync();
+        }
+        else
+        {
+            advertisements = await _ctx.Advertisements.ToListAsync();
+        }
+        
         foreach (var advertisement in advertisements)
         {
             await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
