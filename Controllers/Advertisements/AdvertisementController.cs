@@ -18,9 +18,9 @@ public class AdvertisementController : BaseController
     }
 
     [HttpGet]
-    public Task<List<Advertisement>> Index()
+    public Task<List<Advertisement>> Index([FromQuery(Name = "q")] string? searchParams)
     {
-        return _service.GetAll();
+        return _service.GetAll(searchParams);
     }
 
     [Authorize]

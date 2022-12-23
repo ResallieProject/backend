@@ -36,9 +36,9 @@ public class AdvertisementService
         return await _repository.Get(id);
     }
 
-    public async Task<List<Advertisement>> GetAll()
+    public async Task<List<Advertisement>> GetAll(string? searchParams)
     {
-        return await _repository.GetAll();
+        return await _repository.GetAll(searchParams);
     }
     
     public async Task<Advertisement> Update(Advertisement advertisement, Advertisement oldAdvertisement)
