@@ -112,6 +112,12 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        var socketOptions = new WebSocketOptions
+        {
+            AllowedOrigins = { origins[0] },
+        };
+        app.UseWebSockets(socketOptions);
+
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
