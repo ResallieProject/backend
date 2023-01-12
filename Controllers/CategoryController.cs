@@ -23,5 +23,12 @@ namespace Resallie.Controllers
                 await _service.GetAllCategories()
             );
         }
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategory(int id)
+        {
+            Category? category = await _service.GetCategoryById(id);
+            return category != null ? Ok(category) : NotFound();
+        }
     }
 }
