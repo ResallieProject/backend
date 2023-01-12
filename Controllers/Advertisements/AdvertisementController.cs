@@ -25,13 +25,13 @@ public class AdvertisementController : BaseController
 
     //[Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Advertisement advertisement)
+    public async Task<IActionResult> Create([FromBody] Advertisement advertisement, IFormFileCollection collection)
     {
         if (advertisement.Category != null) return BadRequest();
 
         advertisement.UserId = GetCurrentUserId();
 
-        advertisement = await _service.Create(advertisement);
+        advertisement = await _service.Create(advertisement, collection);
 
         return Ok(advertisement);
     }

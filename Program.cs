@@ -12,6 +12,7 @@ using Resallie.Services.Authentication;
 using Microsoft.Extensions.FileProviders;
 using Bogus.DataSets;
 using Amazon.S3;
+using Amazon.S3.Model;
 
 public class Program
 {
@@ -68,9 +69,6 @@ public class Program
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
-        services.AddAWSService<IAmazonS3>();
-
         services.AddScoped<CategoryRepository>();
         services.AddScoped<CategoryService>();
 
@@ -117,12 +115,6 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
-        //app.UseStaticFiles(new StaticFileOptions
-        //{
-        //    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images")),
-        //    RequestPath = "/Images"
-        //});
             
         app.UseAuthentication();
         app.UseAuthorization();
@@ -134,11 +126,9 @@ public class Program
     {
         var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 
-        using (var scope = scopedFactory.CreateScope())
-        {
-            var service = scope.ServiceProvider.GetService<DataSeeder>();
-            service.Seed(tableName, quantity);
-            Environment.Exit(1);
-        }
+        using var scope = scopedFactory.CreateScope();
+        var service = scope.ServiceProvider.GetService<DataSeeder>();
+        service.Seed(tableName, quantity);
+        Environment.Exit(1);
     }
 }

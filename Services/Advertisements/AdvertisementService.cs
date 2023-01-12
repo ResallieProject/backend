@@ -1,34 +1,32 @@
-﻿using Resallie.Models.Advertisements;
+﻿using Resallie.Models;
+using Resallie.Models.Advertisements;
 using Resallie.Respositories.Advertisements;
 
 namespace Resallie.Services.Advertisements;
 
 public class AdvertisementService
-
 {
     private AdvertisementRepository _repository;
     private AdvertisementFeatureRepository _afRepository;
-    private AdvertisementImagesRepository _aiRepository;
+    private AdvertisementImagesRepository _imgRepository;
 
     public AdvertisementService(
         AdvertisementRepository repository,
-        AdvertisementFeatureRepository afRepository, AdvertisementImagesRepository aiRepository
-        )
+        AdvertisementFeatureRepository afRepository, AdvertisementImagesRepository imgRepository)
     {
         _repository = repository;
         _afRepository = afRepository;
-        _aiRepository = aiRepository;
+        _imgRepository= imgRepository;
     }
 
-    public async Task<Advertisement> Create(Advertisement advertisement)
+    public async Task<Advertisement> Create(Advertisement advertisement, IFormFileCollection? collection)
     {
-        //if(advertisement.Images.Count > 0)
-        //{
-        //    await _aiRepository.StoreImages(advertisement, null); //Frontend houd deze tijdelijk vast,
-        //                                                          //  maar ik weet nog niet waar ik ze vandaan krijg
-        //}
-        await _repository.Create(advertisement);
+        if (collection != null) 
+        {
+            //await _imgRepository.StoreImages(advertisement, collection);
+        }
 
+        await _repository.Create(advertisement);
         return advertisement;
     }
 
@@ -47,7 +45,7 @@ public class AdvertisementService
     {
         return await _repository.GetAll(searchParams);
     }
-    
+
     public async Task<Advertisement> Update(Advertisement advertisement, Advertisement oldAdvertisement)
     {
         oldAdvertisement.Title = advertisement.Title;
@@ -61,22 +59,20 @@ public class AdvertisementService
 
         oldAdvertisement.Features = advertisement.Features;
 
-        oldAdvertisement.Images = advertisement.Images;
-        
         advertisement = await _repository.Update(oldAdvertisement);
-        
+
         return advertisement;
     }
-    
+
     public async Task<bool> IsAdvertisementOwner(int userId, int advertisementId)
     {
         Advertisement? advertisement = await _repository.Get(advertisementId);
-        
+
         if (advertisement == null)
         {
             return false;
         }
-        
+
         return advertisement.UserId == userId;
     }
 }
