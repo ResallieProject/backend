@@ -24,5 +24,19 @@ namespace Resallie.Respositories.Categories
             
             return categories;
         }
+        
+        public async Task<Category?> GetCategoryById(int id)
+        {
+            var category = await _ctx.Categories
+                .Include(c => c.Advertisements)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            
+            foreach (Advertisement advertisement in category.Advertisements)
+            {
+                advertisement.Category = null;
+            }
+
+            return category;
+        }
     }
 }
