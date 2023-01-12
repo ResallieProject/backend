@@ -19,16 +19,13 @@ namespace Resallie.Respositories.Advertisements
 
         public async Task StoreImages(Advertisement advertisement, List<IFormFile> objFiles)
         {
+            //Acces Key ID: SCWPMTJRRN78RY602TM4 
+            //Secret Key: 0085c57c-6b76-4ea6-849d-510ea7b9125e
+            //Project ID: 5be1c470-325a-40da-8187-cdcbbe62b418
             try
             {
-                var path = Directory.CreateDirectory(_environment.WebRootPath + '/' + advertisement.Id + ".Uploads");
-
-                using (FileStream fileStream = System.IO.File.Create(path.FullName))
-                {
-
-                }
+                string strinUrl = String.Format("");
             }
-
             catch
             {
 

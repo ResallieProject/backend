@@ -22,10 +22,11 @@ public class AdvertisementService
 
     public async Task<Advertisement> Create(Advertisement advertisement)
     {
-        if(advertisement.Images.Count > 0)
-        {
-            await _aiRepository.StoreImages(advertisement, );
-        }
+        //if(advertisement.Images.Count > 0)
+        //{
+        //    await _aiRepository.StoreImages(advertisement, null); //Frontend houd deze tijdelijk vast,
+        //                                                          //  maar ik weet nog niet waar ik ze vandaan krijg
+        //}
         await _repository.Create(advertisement);
 
         return advertisement;

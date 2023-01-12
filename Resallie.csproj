@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.2" />
+        <PackageReference Include="AWSSDK.S3" Version="3.7.101.52" />
         <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
         <PackageReference Include="Bogus" Version="34.0.2" />
         <PackageReference Include="Faker.Net" Version="2.0.154" />
