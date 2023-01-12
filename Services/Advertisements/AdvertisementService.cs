@@ -12,21 +12,20 @@ public class AdvertisementService
 
     public AdvertisementService(
         AdvertisementRepository repository,
-        AdvertisementFeatureRepository afRepository, AdvertisementImagesRepository imgRepository)
+        AdvertisementFeatureRepository afRepository, 
+        AdvertisementImagesRepository imgRepository
+        )
     {
         _repository = repository;
         _afRepository = afRepository;
-        _imgRepository= imgRepository;
+        _imgRepository = imgRepository;
     }
 
     public async Task<Advertisement> Create(Advertisement advertisement, IFormFileCollection? collection)
     {
-        if (collection != null) 
-        {
-            //await _imgRepository.StoreImages(advertisement, collection);
-        }
 
         await _repository.Create(advertisement);
+
         return advertisement;
     }
 

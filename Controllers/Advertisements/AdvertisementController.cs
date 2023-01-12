@@ -25,7 +25,7 @@ public class AdvertisementController : BaseController
 
     //[Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Advertisement advertisement, IFormFileCollection collection)
+    public async Task<IActionResult> Create([FromBody] Advertisement advertisement, IFormFileCollection? collection)
     {
         if (advertisement.Category != null) return BadRequest();
 

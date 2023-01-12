@@ -14,121 +14,125 @@ using Bogus.DataSets;
 using Amazon.S3;
 using Amazon.S3.Model;
 
-public class Program
+namespace Resallie
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-        var serverVersion = new MySqlServerVersion(new Version(10, 9));
-        var config = builder.Configuration;
-        var services = builder.Services;
-
-        services.AddDbContextPool<AppDbContext>(dbContextOptions => dbContextOptions
-            .UseMySql(config.GetConnectionString("DefaultConnection"), serverVersion));
-        // The following three options help with debugging, but should
-        // be changed or removed for production.
-        // .LogTo(Console.WriteLine, LogLevel.Information)
-        // .EnableSensitiveDataLogging());
-
-        services.AddControllers();
-
-        // authentication
-        services.AddAuthentication(options =>
+        public static void Main(string[] args)
         {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            Byte[] signingKey = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+            var builder = WebApplication.CreateBuilder(args);
 
-            if (signingKey.Length <= 32)
+            // Add services to the container.
+            var serverVersion = new MySqlServerVersion(new Version(10, 9));
+            var config = builder.Configuration;
+            var services = builder.Services;
+
+            services.AddDbContextPool<AppDbContext>(dbContextOptions => dbContextOptions
+                .UseMySql(config.GetConnectionString("DefaultConnection"), serverVersion));
+            // The following three options help with debugging, but should
+            // be changed or removed for production.
+            // .LogTo(Console.WriteLine, LogLevel.Information)
+            // .EnableSensitiveDataLogging());
+
+            services.AddControllers();
+
+            // authentication
+            services.AddAuthentication(options =>
             {
-                throw new Exception("JWT key must be at least 32 characters long");
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                byte[] signingKey = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+
+                if (signingKey.Length <= 32)
+                {
+                    throw new Exception("JWT key must be at least 32 characters long");
+                }
+
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey
+                        (signingKey),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+
+            services.AddAuthorization();
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+
+            services.AddScoped<CategoryRepository>();
+            services.AddScoped<CategoryService>();
+
+            services.AddScoped<AdvertisementService>();
+            services.AddScoped<AdvertisementRepository>();
+            services.AddScoped<AdvertisementFeatureRepository>();
+            services.AddScoped<AdvertisementImagesRepository>();
+
+            services.AddScoped<UserRepository>();
+            services.AddScoped<AuthenticationService>();
+            services.AddScoped<TokenService>();
+
+            string[] origins = config["CorsOrigins"].Split(';');
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.WithOrigins(origins)
+                            .AllowCredentials()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
+
+            //seeder
+            services.AddTransient<DataSeeder>();
+
+            var app = builder.Build();
+
+            app.UseCors("AllowAllOrigins");
+
+            if (args.Length == 2 || args.Length == 3
+                && args[0].ToLower() == "seeddata")
+            {
+                string categoryname = args[1];
+                int quantity = args.Length > 2 ? int.Parse(args[2]) : 0;
+                SeedData(app, categoryname, quantity);
             }
 
-            options.SaveToken = true;
-            options.TokenValidationParameters = new TokenValidationParameters
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
             {
-                ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                ValidAudience = builder.Configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey
-                    (signingKey),
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = false,
-                ValidateIssuerSigningKey = true
-            };
-        });
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
-        services.AddAuthorization();
-        
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-
-        services.AddScoped<CategoryRepository>();
-        services.AddScoped<CategoryService>();
-
-        services.AddScoped<AdvertisementService>();
-        services.AddScoped<AdvertisementRepository>();
-        services.AddScoped<AdvertisementFeatureRepository>();
-
-        services.AddScoped<UserRepository>();
-        services.AddScoped<AuthenticationService>();
-        services.AddScoped<TokenService>();
-
-        string[] origins = config["CorsOrigins"].Split(';');
-
-        services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAllOrigins",
-                builder =>
-                {
-                    builder.WithOrigins(origins)
-                        .AllowCredentials()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
-        });
-
-        //seeder
-        services.AddTransient<DataSeeder>();
-
-        var app = builder.Build();
-
-        app.UseCors("AllowAllOrigins");
-
-        if (args.Length == 2 || args.Length == 3 
-            && args[0].ToLower() == "seeddata")
-        {
-            string categoryname = args[1];
-            int quantity = args.Length > 2 ? int.Parse(args[2]) : 0;
-            SeedData(app, categoryname, quantity);
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
+            app.Run();
         }
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        private static void SeedData(IHost app, string tableName, int quantity)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+            using var scope = scopedFactory.CreateScope();
+            var service = scope.ServiceProvider.GetService<DataSeeder>();
+            service.Seed(tableName, quantity);
+            Environment.Exit(1);
         }
-            
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.MapControllers();
-        app.Run();
-    }
-
-    private static void SeedData(IHost app, string tableName, int quantity)
-    {
-        var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-        using var scope = scopedFactory.CreateScope();
-        var service = scope.ServiceProvider.GetService<DataSeeder>();
-        service.Seed(tableName, quantity);
-        Environment.Exit(1);
     }
 }

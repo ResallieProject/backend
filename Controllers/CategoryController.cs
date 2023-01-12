@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Resallie.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Resallie.Services.Categories;
 
 namespace Resallie.Controllers

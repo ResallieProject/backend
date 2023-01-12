@@ -6,7 +6,7 @@ namespace Resallie.Respositories.Advertisements;
 
 public class AdvertisementRepository
 {
-    private AppDbContext _ctx;
+    private readonly AppDbContext _ctx;
 
     public AdvertisementRepository(AppDbContext ctx)
     {
