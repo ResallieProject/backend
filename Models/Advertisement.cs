@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Resallie.Data;
 using Bogus;
 
@@ -19,7 +20,7 @@ namespace Resallie.Models
 
         [ForeignKey("Category")]
         [Required] public int CategoryId { get; set; }
-        
+        [JsonIgnore]
         public virtual Category? Category { get; set; }
         
         [ForeignKey("User")]
