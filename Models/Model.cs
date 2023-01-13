@@ -24,6 +24,8 @@ namespace Resallie.Models
         static public Model GetTable(string input)
         {
             (Assembly.GetExecutingAssembly()).CreateInstance(input);
+
+            return null;
         }
     }
 }
