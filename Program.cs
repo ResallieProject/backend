@@ -9,10 +9,7 @@ using Resallie.Respositories.Advertisements;
 using Resallie.Respositories.Users;
 using Resallie.Respositories.Categories;
 using Resallie.Services.Authentication;
-using Microsoft.Extensions.FileProviders;
-using Bogus.DataSets;
-using Amazon.S3;
-using Amazon.S3.Model;
+
 
 namespace Resallie
 {
@@ -64,11 +61,10 @@ namespace Resallie
                     ValidateIssuerSigningKey = true
                 };
             });
-
             services.AddAuthorization();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            services.AddEndpointsApiExplorer();
+            services.AddEndpointsApiExplorer(); 
             services.AddSwaggerGen();
 
             services.AddScoped<CategoryRepository>();
@@ -111,6 +107,9 @@ namespace Resallie
                 int quantity = args.Length > 2 ? int.Parse(args[2]) : 0;
                 SeedData(app, categoryname, quantity);
             }
+
+            AdImagesStoreApi.SetAdImagesApi(config["Scaleway-API:AccesKeyId"], 
+                config["Scaleway-API:SecretKey"], config["Scaleway-API:BucketName"]);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
