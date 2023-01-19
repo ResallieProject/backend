@@ -127,6 +127,6 @@ public class Program
             var service = scope.ServiceProvider.GetService<DataSeeder>();
             service.Seed(tableName, quantity);
             Environment.Exit(1);
-        }
+            }
     }
 }
