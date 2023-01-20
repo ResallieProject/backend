@@ -18,21 +18,5 @@ namespace Resallie.Models
         public int? CategoryId { get; set; }
         public virtual Category? ParentCategory { get; set; }
         #endregion
-
-        public override void Seed(AppDbContext appDbContext, int quantity)
-        {
-            if (!appDbContext.Categories.Any() || quantity > 0)
-            {
-                quantity= quantity == 0 ? quantity = 10 : quantity;
-                for (int i = 0; i < quantity; i++)
-                {
-                     appDbContext.Categories.Add(new Faker<Category>()
-                    .RuleFor(m => m.Name, f => f.Commerce.Product())
-                    .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
-                    .RuleFor(m => m.CreatedAt, f => DateTime.Now));
-                }
-                appDbContext.SaveChanges();
-            }
-        }
     }
 }

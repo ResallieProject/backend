@@ -15,7 +15,7 @@ public class AppDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Advertisement>().Property(a => a.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");

@@ -15,15 +15,5 @@ namespace Resallie.Models
 
         [Timestamp, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdatedAt { get; set; }
-
-        public virtual void Seed(AppDbContext appDbContext, int quantity)
-        {
-            throw new NotImplementedException();
-        }
-
-        static public Model GetTable(string input)
-        {
-            (Assembly.GetExecutingAssembly()).CreateInstance(input);
-        }
     }
 }
