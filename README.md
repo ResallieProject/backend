@@ -1,6 +1,6 @@
 # Resallie Backend
 
-C# backend of the Resallie Project
+C# backend of the Resallie Project. For new project members, or a new group please see the Transfer_Document.pdf.
 
 ### Running the project
 
