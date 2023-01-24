@@ -18,10 +18,10 @@ namespace Resallie.Respositories.Advertisements
             _ctx = ctx;
         }
 
-        public async Task StoreImages(Advertisement advertisement, IFormFileCollection objFiles)
+        public async Task StoreImages(Advertisement advertisement)
         {
             int order = 1;
-            foreach (var image in objFiles)
+            foreach (var image in advertisement.TempCollectedImages)
             {
                 string destination = $"Images/{advertisement.UserId}/" + GenerateFileName(16) + Path.GetExtension(image.FileName).ToLower();
 

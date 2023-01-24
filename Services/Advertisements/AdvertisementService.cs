@@ -21,15 +21,16 @@ public class AdvertisementService
         _imgRepository = imgRepository;
     }
 
-    public async Task<Advertisement> Create(Advertisement advertisement, IFormFileCollection? collection)
+    public async Task<Advertisement> Create(Advertisement advertisement)
     {
+        var collection = advertisement.TempCollectedImages;
         if (collection.Count > 0)
         {
-            foreach (var item in collection)
+            foreach (var item in advertisement.TempCollectedImages)
             {
                 if (!Validate(item))
                 {
-                    throw new InvalidDataException("Filesize is greater than 7 mb of isn't from the right extension .png or .jpg");
+                    throw new BadHttpRequestException("Filesize is greater than 7 mb of isn't from the right extension .png or .jpg");
                 }
             }
         }
@@ -41,7 +42,7 @@ public class AdvertisementService
             //AppDbContext temp = new AppDbContext(new Microsoft.EntityFrameworkCore.DbContextOptions<AppDbContext>());
             //new Task(() => _imgRepository.StoreImages(advertisement, collection, temp)
             //).Start();
-            await _imgRepository.StoreImages(advertisement, collection);
+            await _imgRepository.StoreImages(advertisement);
         }
 
         return advertisement;

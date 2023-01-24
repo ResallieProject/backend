@@ -24,27 +24,15 @@ public class AdvertisementController : BaseController
         return _service.GetAll(searchParams);
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create(IFormFileCollection? collection)//, [FromBody] Advertisement advertisement)
+    public async Task<IActionResult> Create([FromBody] Advertisement advertisement)
     {
-        Advertisement advertisement = new()
-        {
-            UserId = 1,
-            Title = "title",
-            Defects = "fdsa",
-            CategoryId = 1,
-            Description = "description",
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
-            Price = 0
-        };
-
         if (advertisement.Category != null) return BadRequest();
 
-        //advertisement.UserId = GetCurrentUserId();
-
-        advertisement = await _service.Create(advertisement, collection);
+        advertisement.UserId = GetCurrentUserId();
+        
+        advertisement = await _service.Create(advertisement);
 
         return Ok(advertisement);
     }

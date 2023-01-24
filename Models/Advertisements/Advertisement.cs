@@ -30,7 +30,8 @@ namespace Resallie.Models.Advertisements
 
         public virtual ICollection<AdvertisementImage>? Images { get; set; }
 
-       // public virtual IFormFileCollection? StoreImages { get; set; }
+        [NotMapped]
+        public virtual IFormFileCollection? TempCollectedImages { get; set; }
 
         #endregion
 
