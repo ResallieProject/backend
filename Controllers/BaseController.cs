@@ -8,6 +8,6 @@ public class BaseController : ControllerBase
     [NonAction]
     public int GetCurrentUserId()
     {
-        return 1;// int.Parse(HttpContext.User.FindFirstValue("UserId"));
+        return int.Parse(HttpContext.User.FindFirstValue("UserId"));
     }
 }

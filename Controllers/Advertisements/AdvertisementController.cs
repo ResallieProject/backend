@@ -15,6 +15,7 @@ public class AdvertisementController : BaseController
     public AdvertisementController(AdvertisementService service)
     {
         _service = service;
+
     }
 
     [HttpGet]
@@ -23,7 +24,7 @@ public class AdvertisementController : BaseController
         return _service.GetAll(searchParams);
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] Advertisement advertisement, IFormFileCollection? collection)
     {
