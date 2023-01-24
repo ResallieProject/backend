@@ -15,6 +15,7 @@ public class AdvertisementRepository
 
     public async Task<Advertisement> Create(Advertisement advertisement)
     {
+        
         await _ctx.Advertisements.AddAsync(advertisement);
         await _ctx.SaveChangesAsync();
 

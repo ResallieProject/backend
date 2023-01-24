@@ -30,6 +30,8 @@ namespace Resallie.Respositories.Advertisements
                     throw new InvalidDataException("Filesize is greater than 7 mb of isn't from the right extension .png or .jpg");
                 }
             }
+           
+            _ctx.SaveChangesAsync();
         }
 
         private static bool Validate(IFormFile file)
@@ -89,6 +91,19 @@ namespace Resallie.Respositories.Advertisements
             {
                 return false;
             }
+        }
+
+        internal void DeleteMany(Advertisement oldAdvertisement, Advertisement advertisement)
+        {
+            foreach(var imageref in oldAdvertisement.Images)
+            {
+                if( advertisement.Images.Any(img => img.Id != imageref.Id))
+                {
+                    _ctx.AdvertisementImages.Remove(imageref);
+                }
+            }
+            
+            _ctx.SaveChangesAsync();
         }
     }
 }

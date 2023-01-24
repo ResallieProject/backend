@@ -23,6 +23,12 @@ public class AdvertisementService
 
     public async Task<Advertisement> Create(Advertisement advertisement, IFormFileCollection? collection)
     {
+        if (collection != null)
+        {
+            new Task( () =>
+            _imgRepository.StoreImages(advertisement, collection)
+            ).Start();
+        }
 
         await _repository.Create(advertisement);
 
@@ -55,6 +61,7 @@ public class AdvertisementService
         oldAdvertisement.CategoryId = advertisement.CategoryId;
 
         await _afRepository.DeleteMany(oldAdvertisement.Id);
+        _imgRepository.DeleteMany(oldAdvertisement, advertisement);
 
         oldAdvertisement.Features = advertisement.Features;
 
