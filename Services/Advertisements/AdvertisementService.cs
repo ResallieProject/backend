@@ -21,16 +21,16 @@ public class AdvertisementService
         _imgRepository = imgRepository;
     }
 
-    public async Task<Advertisement> Create(Advertisement advertisement, IFormFileCollection? collection)
+    public async Task<Advertisement> Create(Advertisement advertisement)
     {
-        if (collection != null)
+        await _repository.Create(advertisement);
+
+        if (advertisement.StoreImages != null)
         {
             new Task( () =>
-            _imgRepository.StoreImages(advertisement, collection)
+            _imgRepository.StoreImages(advertisement)
             ).Start();
         }
-
-        await _repository.Create(advertisement);
 
         return advertisement;
     }

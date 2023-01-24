@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IO;
 using Minio;
 using Minio.DataModel;
 using Resallie.Data;
@@ -15,14 +15,15 @@ namespace Resallie.Respositories.Advertisements
             _ctx = ctx;
         }
 
-        public void StoreImages(Advertisement advertisement, IFormFileCollection objFiles)
+        public async void StoreImages(Advertisement advertisement)
         {
             int order = 1;
-            foreach (var file in objFiles)
+            Task store;
+            foreach (var file in advertisement.StoreImages)
             {
                 if (Validate(file))
                 {
-                    _ = Run(file, advertisement.UserId, advertisement.Id, order);
+                    store = Run(file, advertisement.UserId, advertisement.Id, order);
                     order++;
                 }
                 else
@@ -30,8 +31,6 @@ namespace Resallie.Respositories.Advertisements
                     throw new InvalidDataException("Filesize is greater than 7 mb of isn't from the right extension .png or .jpg");
                 }
             }
-           
-            _ctx.SaveChangesAsync();
         }
 
         private static bool Validate(IFormFile file)
@@ -59,18 +58,19 @@ namespace Resallie.Respositories.Advertisements
                 fileBytes = ms.ToArray();
             }
 
-            Random random = new();
-            string destignation = $"Images/{UserId}/" + string.GetHashCode(file.FileName) + random.Next((int)file.Length / 100);
+            string destination = "Images/" + GenerateFileName(16) + Path.GetExtension(file.FileName).ToLower();
+            Console.WriteLine(destination);
+
             using var filestream = new MemoryStream(fileBytes);
-            args.WithObject(destignation)
+            args.WithObject(destination)
             .WithStreamData(filestream)
             .WithObjectSize(filestream.Length)
-            .WithContentType("application/octet-stream");
+            .WithContentType(file.ContentType);
             await client.PutObjectAsync(args);
 
-            if (CheckSuccesFullyStoredAsync(destignation, client).Result)
+            if (CheckSuccesFullyStoredAsync(destination, client).Result)
             {
-                _ctx.AdvertisementImages.Add(new AdvertisementImage() { AdvertisementId = AdvertisementId, Path = destignation, Order = order });
+                _ctx.AdvertisementImages.Add(new AdvertisementImage() { AdvertisementId = AdvertisementId, Path = destination, Order = order });
             }
         }
 
@@ -91,6 +91,13 @@ namespace Resallie.Respositories.Advertisements
             {
                 return false;
             }
+        }
+        
+        public static string GenerateFileName(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[(new Random()).Next(s.Length)]).ToArray());
         }
 
         internal void DeleteMany(Advertisement oldAdvertisement, Advertisement advertisement)

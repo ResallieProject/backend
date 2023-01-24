@@ -30,6 +30,8 @@ namespace Resallie.Models.Advertisements
 
         public virtual ICollection<AdvertisementImage>? Images { get; set; }
 
+        public virtual IFormFileCollection? StoreImages { get; set; }
+
         #endregion
 
         public override void Seed(AppDbContext appDbContext, int quantity)
