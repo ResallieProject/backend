@@ -26,24 +26,25 @@ public class AdvertisementController : BaseController
 
     //[Authorize]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Advertisement advertisement)
+    public async Task<IActionResult> Create(IFormFileCollection? collection)//, [FromBody] Advertisement advertisement)
     {
-        //Advertisement advertisement = new Advertisement();
-        //advertisement.UserId = 5;
-        //advertisement.Title = "title";
-        //advertisement.Defects = "fdsa";
-        //advertisement.CategoryId = 1;
-        //advertisement.Description = "description"; 
-        //advertisement.CreatedAt = DateTime.Now;
-        //advertisement.UpdatedAt = DateTime.Now;
-        //advertisement.Price = 0;
-        //advertisement.Id = 1;
+        Advertisement advertisement = new()
+        {
+            UserId = 1,
+            Title = "title",
+            Defects = "fdsa",
+            CategoryId = 1,
+            Description = "description",
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now,
+            Price = 0
+        };
 
         if (advertisement.Category != null) return BadRequest();
 
         //advertisement.UserId = GetCurrentUserId();
 
-        advertisement = await _service.Create(advertisement);
+        advertisement = await _service.Create(advertisement, collection);
 
         return Ok(advertisement);
     }

@@ -1,4 +1,4 @@
-﻿using Resallie.Models;
+﻿using Resallie.Data;
 using Resallie.Models.Advertisements;
 using Resallie.Respositories.Advertisements;
 
@@ -6,13 +6,13 @@ namespace Resallie.Services.Advertisements;
 
 public class AdvertisementService
 {
-    private AdvertisementRepository _repository;
-    private AdvertisementFeatureRepository _afRepository;
-    private AdvertisementImagesRepository _imgRepository;
+    private readonly AdvertisementRepository _repository;
+    private readonly AdvertisementFeatureRepository _afRepository;
+    private readonly AdvertisementImagesRepository _imgRepository;
 
     public AdvertisementService(
         AdvertisementRepository repository,
-        AdvertisementFeatureRepository afRepository, 
+        AdvertisementFeatureRepository afRepository,
         AdvertisementImagesRepository imgRepository
         )
     {
@@ -21,15 +21,27 @@ public class AdvertisementService
         _imgRepository = imgRepository;
     }
 
-    public async Task<Advertisement> Create(Advertisement advertisement)
+    public async Task<Advertisement> Create(Advertisement advertisement, IFormFileCollection? collection)
     {
+        if (collection.Count > 0)
+        {
+            foreach (var item in collection)
+            {
+                if (!Validate(item))
+                {
+                    throw new InvalidDataException("Filesize is greater than 7 mb of isn't from the right extension .png or .jpg");
+                }
+            }
+        }
+
         await _repository.Create(advertisement);
 
-        if (advertisement.StoreImages != null)
+        if (collection != null)
         {
-            new Task( () =>
-            _imgRepository.StoreImages(advertisement)
-            ).Start();
+            //AppDbContext temp = new AppDbContext(new Microsoft.EntityFrameworkCore.DbContextOptions<AppDbContext>());
+            //new Task(() => _imgRepository.StoreImages(advertisement, collection, temp)
+            //).Start();
+            await _imgRepository.StoreImages(advertisement, collection);
         }
 
         return advertisement;
@@ -80,5 +92,19 @@ public class AdvertisementService
         }
 
         return advertisement.UserId == userId;
+    }
+
+    private static bool Validate(IFormFile file)
+    {
+        long allowedSize = 7;
+        if (file.ContentType != "image/png"
+            && file.ContentType != "image/jpg"
+            && file.ContentType != "image/jpeg"
+            || file.Length > allowedSize * 1048576)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
