@@ -1,8 +1,6 @@
-﻿using System.IO;
-using Minio;
+﻿using Minio;
 using Minio.DataModel;
 using Resallie.Data;
-using Resallie.Models;
 using Resallie.Models.Advertisements;
 
 namespace Resallie.Respositories.Advertisements
@@ -23,7 +21,8 @@ namespace Resallie.Respositories.Advertisements
             int order = 1;
             foreach (var image in advertisement.TempCollectedImages)
             {
-                string destination = $"Images/{advertisement.UserId}/" + GenerateFileName(16) + Path.GetExtension(image.FileName).ToLower();
+                string destination = $"Images/{advertisement.UserId}/" + 
+                    GenerateFileName(16) + Path.GetExtension(image.FileName).ToLower();
 
                 await TransferToStorage(image, destination);
                 await CheckSuccesFullyStoredAsync(destination);

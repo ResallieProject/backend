@@ -13,6 +13,5 @@ namespace Resallie.Models.Advertisements
         [JsonIgnore]
         [ForeignKey("Advertisement")]
         [Required] public int AdvertisementId { get; set; }
-
     }
 }

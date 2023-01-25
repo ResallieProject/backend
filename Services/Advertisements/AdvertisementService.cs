@@ -47,6 +47,19 @@ public class AdvertisementService
 
         return advertisement;
     }
+    private static bool Validate(IFormFile file)
+    {
+        long allowedSize = 7;
+        if (file.ContentType != "image/png"
+            && file.ContentType != "image/jpg"
+            && file.ContentType != "image/jpeg"
+            || file.Length > allowedSize * 1048576)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     public async Task<bool> Delete(int id)
     {
@@ -95,17 +108,5 @@ public class AdvertisementService
         return advertisement.UserId == userId;
     }
 
-    private static bool Validate(IFormFile file)
-    {
-        long allowedSize = 7;
-        if (file.ContentType != "image/png"
-            && file.ContentType != "image/jpg"
-            && file.ContentType != "image/jpeg"
-            || file.Length > allowedSize * 1048576)
-        {
-            return false;
-        }
-
-        return true;
-    }
+   
 }
