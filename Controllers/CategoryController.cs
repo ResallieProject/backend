@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Resallie.Models;
 using Resallie.Services.Categories;
 
 namespace Resallie.Controllers
@@ -20,6 +21,13 @@ namespace Resallie.Controllers
             return Ok(
                 await _service.GetAllCategories()
             );
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategory(int id)
+        {
+            Category? category = await _service.GetCategoryById(id);
+            return category != null ? Ok(category) : NotFound();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Resallie.Data;
 using Bogus;
 
@@ -19,7 +20,7 @@ namespace Resallie.Models.Advertisements
 
         [ForeignKey("Category")]
         [Required] public int CategoryId { get; set; }
-
+        [JsonIgnore]
         public virtual Category? Category { get; set; }
 
         [ForeignKey("User")]
@@ -42,12 +43,12 @@ namespace Resallie.Models.Advertisements
                 quantity = quantity == 0 ? quantity = 10 : quantity;
                 for (int i = 0; i < quantity; i++)
                 {
-                    appDbContext.Advertisements.Add(new Faker<Advertisement>()
-                   .RuleFor(m => m.Title, f => f.Commerce.ProductName())
-                   .RuleFor(m => m.Defects, f => f.Music.Genre())
-                   .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
-                   .RuleFor(m => m.CategoryId, f => 1)
-                   .RuleFor(m => m.CreatedAt, f => DateTime.Now));
+                     appDbContext.Advertisements.Add( new Faker<Advertisement>()
+                    .RuleFor(m => m.Title, f => f.Commerce.ProductName())
+                    .RuleFor(m => m.Defects, f => f.Music.Genre())
+                    .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
+                    .RuleFor(m => m.CategoryId, f => 1)
+                    .RuleFor(m => m.CreatedAt, f => DateTime.Now));
                 }
                 appDbContext.SaveChanges();
             }

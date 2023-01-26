@@ -18,5 +18,12 @@ namespace Resallie.Services.Categories
             
             return categories;
         }
+        
+        public async Task<Category?> GetCategoryById(int id)
+        {
+            Category? category = await _repository.GetCategoryById(id);
+            
+            return category;
+        }
     }
 }

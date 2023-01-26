@@ -15,7 +15,6 @@ public class AdvertisementRepository
 
     public async Task<Advertisement> Create(Advertisement advertisement)
     {
-        
         await _ctx.Advertisements.AddAsync(advertisement);
         await _ctx.SaveChangesAsync();
 
@@ -46,7 +45,7 @@ public class AdvertisementRepository
 
         await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
         await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
-        //await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
+        await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
 
         return advertisement;
     }
@@ -69,7 +68,7 @@ public class AdvertisementRepository
         {
             await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
             await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
-            //await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
+            await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
         }
 
         return advertisements;
@@ -85,7 +84,7 @@ public class AdvertisementRepository
 
     public async Task<Advertisement> FindExisting(int id)
     {
-            var advertisement = await _ctx.Advertisements.FindAsync(id);
+        var advertisement = await _ctx.Advertisements.FindAsync(id);
         if (advertisement == null)
         {
             throw new Exception("Advertisement not found");

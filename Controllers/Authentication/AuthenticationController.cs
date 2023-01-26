@@ -5,40 +5,41 @@ using Resallie.Requests.Authentication;
 using Resallie.Responses.Authentication;
 using Resallie.Services.Authentication;
 
-namespace Resallie.Controllers.Authentication;
-
-[Route("[controller]")]
-[ApiController]
-public class AuthenticationController : BaseController
+namespace Resallie.Controllers.Authentication
 {
-    private readonly AuthenticationService _service;
-
-    public AuthenticationController(AuthenticationService service)
+    [Route("[controller]")]
+    [ApiController]
+    public class AuthenticationController : BaseController
     {
-        _service = service;
-    }
+        private readonly AuthenticationService _service;
 
-    [HttpPost("Register")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Register([FromBody] User request)
-    {
-        var user = await _service.RegisterUser(request);
-        
-        if (user == null)
-            return BadRequest(new { message = "Email is already taken" });
+        public AuthenticationController(AuthenticationService service)
+        {
+            _service = service;
+        }
 
-        return Ok(user);
-    }
-    
-    [HttpPost("Authenticate")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
-    {
-        var token = await _service.AuthenticateUser(request.Email, request.Password);
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] User request)
+        {
+            var user = await _service.RegisterUser(request);
 
-        if (token == null)
-            return BadRequest(new { message = "Username or password is incorrect" });
+            if (user == null)
+                return BadRequest(new { message = "Email is already taken" });
 
-        return Ok(new AuthenticatedResponse(token));
+            return Ok(user);
+        }
+
+        [HttpPost("Authenticate")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
+        {
+            var token = await _service.AuthenticateUser(request.Email, request.Password);
+
+            if (token == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(new AuthenticatedResponse(token));
+        }
     }
 }

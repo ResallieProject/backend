@@ -1,17 +1,13 @@
-﻿using Minio; using System.Net;
+﻿using Minio; 
+using System.Net;
 
 namespace Resallie
 {
     public static class AdImagesStoreApi
     {
-
-        public static MinioClient? 
-            AdImagesStoreClient { get; private set; }
-        public static PutObjectArgs? 
-            BasePutObjectArgs { get; private set; }
-        public static StatObjectArgs? 
-            BaseStatObjectArgs { get; private set; }
-
+        public static MinioClient? AdImagesStoreClient { get; private set; }        
+        public static PutObjectArgs? BasePutObjectArgs { get; private set; }
+        public static StatObjectArgs? BaseStatObjectArgs { get; private set; }
 
         public static void SetAdImagesApi(string accesKeyId,
             string secretKey, string bucketName)
@@ -27,11 +23,9 @@ namespace Resallie
                 .WithSSL()
                 .Build();
 
-            BasePutObjectArgs = new PutObjectArgs()
-                .WithBucket(bucketName);
+            BasePutObjectArgs = new PutObjectArgs().WithBucket(bucketName);
 
-            BaseStatObjectArgs = new StatObjectArgs()
-                .WithBucket(bucketName);
+            BaseStatObjectArgs = new StatObjectArgs().WithBucket(bucketName);
         }
     }
 }

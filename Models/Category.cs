@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Resallie.Data;
 using Bogus;
-
+using Resallie.Models.Advertisements;
 
 namespace Resallie.Models
 {
@@ -20,6 +20,7 @@ namespace Resallie.Models
         [JsonIgnore] 
         public virtual Category? ParentCategory { get; set; }
         public virtual ICollection<Category>? Children { get; set; }
+        public virtual ICollection<Advertisement>? Advertisements { get; set; }
 
         public override void Seed(AppDbContext appDbContext, int quantity)
         {

@@ -1,5 +1,4 @@
-﻿using Resallie.Data;
-using Resallie.Models.Advertisements;
+﻿using Resallie.Models.Advertisements;
 using Resallie.Respositories.Advertisements;
 
 namespace Resallie.Services.Advertisements;

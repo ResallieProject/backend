@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
 using Resallie.Models;
+using Resallie.Models.Advertisements;
 
 namespace Resallie.Respositories.Categories
 {
     public class CategoryRepository
     {
-        private AppDbContext _ctx;
+        private readonly AppDbContext _ctx;
 
         public CategoryRepository(AppDbContext ctx)
         {
@@ -23,6 +24,20 @@ namespace Resallie.Respositories.Categories
                 .ToListAsync();
             
             return categories;
+        }
+        
+        public async Task<Category?> GetCategoryById(int id)
+        {
+            var category = await _ctx.Categories
+                .Include(c => c.Advertisements)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            
+            foreach (Advertisement advertisement in category.Advertisements)
+            {
+                advertisement.Category = null;
+            }
+
+            return category;
         }
     }
 }
