@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using Resallie.Data;
 using Bogus;
 
-namespace Resallie.Models
+namespace Resallie.Models.Advertisements
 {
     public class Advertisement : Model
     {
@@ -22,12 +22,18 @@ namespace Resallie.Models
         [Required] public int CategoryId { get; set; }
         [JsonIgnore]
         public virtual Category? Category { get; set; }
-        
+
         [ForeignKey("User")]
         public int UserId { get; set; }
         public virtual User? User { get; set; }
-        
+
         public virtual ICollection<AdvertisementFeature>? Features { get; set; }
+
+        public virtual ICollection<AdvertisementImage>? Images { get; set; }
+
+        [NotMapped]
+        public virtual IFormFileCollection? TempCollectedImages { get; set; }
+
         #endregion
 
         public override void Seed(AppDbContext appDbContext, int quantity)

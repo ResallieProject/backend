@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
-using Resallie.Models;
+using Resallie.Models.Advertisements;
 
 namespace Resallie.Respositories.Advertisements;
 
 public class AdvertisementRepository
 {
-    private AppDbContext _ctx;
+    private readonly AppDbContext _ctx;
 
     public AdvertisementRepository(AppDbContext ctx)
     {
@@ -45,6 +45,7 @@ public class AdvertisementRepository
 
         await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
         await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
+        await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
 
         return advertisement;
     }
@@ -67,6 +68,7 @@ public class AdvertisementRepository
         {
             await _ctx.Entry(advertisement).Reference(ad => ad.Category).LoadAsync();
             await _ctx.Entry(advertisement).Collection(ad => ad.Features).LoadAsync();
+            await _ctx.Entry(advertisement).Collection(ad => ad.Images).LoadAsync();
         }
 
         return advertisements;
@@ -82,7 +84,7 @@ public class AdvertisementRepository
 
     public async Task<Advertisement> FindExisting(int id)
     {
-            var advertisement = await _ctx.Advertisements.FindAsync(id);
+        var advertisement = await _ctx.Advertisements.FindAsync(id);
         if (advertisement == null)
         {
             throw new Exception("Advertisement not found");

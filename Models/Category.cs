@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Resallie.Data;
 using Bogus;
-
+using Resallie.Models.Advertisements;
 
 namespace Resallie.Models
 {

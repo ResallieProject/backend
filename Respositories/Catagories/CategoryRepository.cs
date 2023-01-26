@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Resallie.Data;
 using Resallie.Models;
+using Resallie.Models.Advertisements;
 
 namespace Resallie.Respositories.Categories
 {
     public class CategoryRepository
     {
-        private AppDbContext _ctx;
+        private readonly AppDbContext _ctx;
 
         public CategoryRepository(AppDbContext ctx)
         {
