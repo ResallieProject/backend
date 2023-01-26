@@ -20,7 +20,7 @@
     },
     "Test 2 seeded categories": {
       "commandName": "Project",
-      "commandLineArgs": "seeddata categories 2",
+      "commandLineArgs": "seeddata advertisement",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

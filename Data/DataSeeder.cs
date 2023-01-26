@@ -1,8 +1,6 @@
 ﻿using Bogus;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Resallie.Models;
-using System.Dynamic;
-using System.Reflection;
+
 
 namespace Resallie.Data
 {
@@ -37,13 +35,16 @@ namespace Resallie.Data
                 case "Advertisements":
                 case "advertisements":
                     {
-                        appDbContext.Advertisements.Add(new Faker<Advertisement>()
+                        for (int i = 0; i < quantity; i++)
+                        {
+                            appDbContext.Advertisements.Add(new Faker<Advertisement>()
                         .RuleFor(m => m.Title, f => f.Commerce.ProductName())
                         .RuleFor(m => m.Defects, f => f.Music.Genre())
                         .RuleFor(m => m.Description, f => f.Commerce.ProductDescription())
                         .RuleFor(m => m.CategoryId, f => 1)
-                        .RuleFor(m => m.UserId, f => f.Random.Int(0, 10))
+                        .RuleFor(m => m.UserId, f => 1)
                         .RuleFor(m => m.CreatedAt, f => DateTime.Now));
+                        }
                     }
                     break;
 
@@ -52,7 +53,9 @@ namespace Resallie.Data
                 case "Users":
                 case "users":
                     {
-                        appDbContext.Users.Add(new Faker<User>()
+                        for (int i = 0; i < quantity; i++)
+                        {
+                            appDbContext.Users.Add(new Faker<User>()
                         .RuleFor(m => m.FirstName, f => f.Person.FirstName)
                         .RuleFor(m => m.LastName, f => f.Person.LastName)
                         .RuleFor(m => m.Email, f => f.Person.Email)
@@ -60,9 +63,11 @@ namespace Resallie.Data
                         .RuleFor(m => m.Gender, f => f.Person.Gender.ToString())
                         .RuleFor(m => m.Phone, f => f.Person.Phone)
                         .RuleFor(m => m.CreatedAt, f => DateTime.Now));
+                        }
                     }
                     break;
             }
+            appDbContext.SaveChanges();
         }
     }
 }
